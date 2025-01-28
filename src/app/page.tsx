@@ -1,18 +1,21 @@
 // src/app/page.tsx
-import HeroSection from '@/components/HeroSection';
-import FeaturedSection from '@/components/FeaturedSection';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { Metadata } from "next";
+import HeroSection from "@/components/HeroSection";
+import FeaturedSection from "@/components/FeaturedSection";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "ASTAWON - HUMAS RUTAN WONOSOBO",
+  description:
+    "ASTAWON adalah platform digital yang dirancang untuk mempermudah pengelolaan informasi dan penyampaian perkembangan terkini tentang Rutan Wonosobo.",
+};
+
+export default function HomePage() {
   return (
     <div className="min-h-screen font-sans antialiased">
-      <Navbar />
       <main>
         <HeroSection />
         <FeaturedSection />
       </main>
-      <Footer />
     </div>
   );
 }

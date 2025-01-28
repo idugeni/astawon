@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import { createContext, useContext, ReactNode, useEffect } from 'react';
+import { createContext, useContext, ReactNode, useEffect } from "react";
+import Head from "next/head";
 
 interface MetadataContextProps {
   setTitle: (title: string) => void;
@@ -13,17 +14,6 @@ const MetadataContext = createContext<MetadataContextProps>({
 });
 
 export function MetadataProvider({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    document.title = 'ASTAWON - HUMAS RUTAN WONOSOBO';
-    const metaDescription = document.querySelector("meta[name='description']");
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        'content',
-        'Aplikasi resmi untuk informasi dan pelayanan Humas Rutan Wonosobo.'
-      );
-    }
-  }, []);
-
   const setTitle = (title: string) => {
     document.title = `${title} - ASTAWON`;
   };
@@ -31,15 +21,22 @@ export function MetadataProvider({ children }: { children: ReactNode }) {
   const setDescription = (description: string) => {
     let metaDescription = document.querySelector("meta[name='description']");
     if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      (metaDescription as HTMLMetaElement).name = 'description';
+      metaDescription = document.createElement("meta");
+      (metaDescription as HTMLMetaElement).name = "description";
       document.head.appendChild(metaDescription);
     }
-    metaDescription.setAttribute('content', description);
+    metaDescription.setAttribute("content", description);
   };
 
   return (
     <MetadataContext.Provider value={{ setTitle, setDescription }}>
+      <Head>
+        <title>ASTAWON - HUMAS RUTAN WONOSOBO</title>
+        <meta
+          name="description"
+          content="Aplikasi resmi untuk informasi dan pelayanan Humas Rutan Wonosobo."
+        />
+      </Head>
       {children}
     </MetadataContext.Provider>
   );

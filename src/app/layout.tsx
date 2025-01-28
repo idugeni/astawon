@@ -1,41 +1,74 @@
-'use client';
+// src/app/layout.tsx
+import { Poppins } from "next/font/google";
+import "./globals.css";
+import { defaultMetadata } from "@/config/metadata";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Suspense } from "react";
 
-import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
-import { MetadataProvider, useMetadata } from '@/utils/MetadataContext';
-import React from 'react';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-  display: 'swap',
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  preload: true,
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-  display: 'swap',
-});
+export const metadata = {
+  ...defaultMetadata,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: "your-google-verification-code",
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+function LoadingFallback() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="loading loading-spinner loading-lg"></div>
+    </div>
+  );
+}
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useMetadata(
-    process.env.NEXT_PUBLIC_APP_TITLE || 'ASTAWON - HUMAS RUTAN WONOSOBO',
-    process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
-      'Platform ini dirancang khusus sebagai alat bantu untuk memudahkan pekerjaan anggota humas dalam memberikan informasi terkini dan terpercaya kepada masyarakat seputar kegiatan dan perkembangan Rutan Wonosobo.'
-  );
-
   return (
-    <html data-theme="corporate" lang="id">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <React.StrictMode>
-          <MetadataProvider>{children}</MetadataProvider>
-        </React.StrictMode>
+    <html
+      data-theme="business"
+      lang="id"
+      className={`${poppins.variable} scroll-smooth`}
+    >
+      <body className="min-h-screen flex flex-col">
+        <Suspense fallback={<LoadingFallback />}>
+          <Navbar />
+        </Suspense>
+
+        <main className="flex-grow">
+          <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
+        </main>
+
+        <Suspense fallback={<LoadingFallback />}>
+          <Footer />
+        </Suspense>
       </body>
     </html>
   );
