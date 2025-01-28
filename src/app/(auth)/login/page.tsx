@@ -65,7 +65,7 @@ export default function LoginPage() {
 
   return (
     <div
-      data-theme='night'
+     
       className='min-h-screen flex items-center justify-center p-4 grid-background overflow-hidden'
     >
       <div className='card glass w-full max-w-4xl shadow-xl flex flex-col lg:flex-row transition-all overflow-auto'>

@@ -27,7 +27,7 @@ export default function DashboardLayout({
   }, [router]);
 
   return (
-    <div data-theme='night' className='flex flex-col lg:flex-row'>
+    <div className='flex flex-col lg:flex-row'>
       {/* Sidebar */}
       <Sidebar />
 

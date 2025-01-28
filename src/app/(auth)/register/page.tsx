@@ -80,7 +80,7 @@ export default function RegisterPage() {
 
   return (
     <div
-      data-theme='night'
+     
       className='min-h-screen flex items-center justify-center grid-background p-4 overflow-hidden'
     >
       <div className='card w-full max-w-4xl shadow-xl flex flex-col lg:flex-row transition-all overflow-auto'>

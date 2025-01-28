@@ -65,7 +65,7 @@ export default function Sidebar() {
   };
 
   return (
-    <div data-theme='night' className='relative'>
+    <div className='relative'>
       {/* Sidebar for large screens (lg and up) */}
       <div className='hidden lg:flex flex-col w-64 bg-base-200 border-r border-neutral shadow-md h-screen fixed left-0 top-0 z-50 text-base-content'>
         <div className='pt-4'>

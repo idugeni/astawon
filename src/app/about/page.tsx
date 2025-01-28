@@ -27,10 +27,10 @@ export default function AboutPage() {
   );
 
   return (
-    <div data-theme='night' className='min-h-screen font-sans antialiased'>
+    <div className='min-h-screen font-sans antialiased'>
       <Navbar />
       <div
-        data-theme='night'
+       
         className='min-h-screen bg-base-100 p-8 sm:p-16 transition-all duration-700 ease-in-out'
       >
         <section className='max-w-7xl mx-auto'>

@@ -21,6 +21,7 @@ export default function Icon() {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#F1F1F1',
+          borderRadius: '4px',
         }}
       >
         A
