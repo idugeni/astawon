@@ -21,8 +21,7 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 export default function AboutPage() {
   useDocumentTitle("About");
   return (
-    <>
-      <div className="min-h-screen bg-base-100 p-8 sm:p-16 transition-all duration-700 ease-in-out">
+      <div data-theme="abyss" className="min-h-screen bg-base-100 p-8 sm:p-16 transition-all duration-700 ease-in-out">
         <section className="max-w-7xl mx-auto">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-center mb-6 pb-2 bg-gradient-to-r from-pink-500 to-orange-400 text-transparent bg-clip-text">
             Tentang ASTAWON
@@ -131,7 +130,7 @@ export default function AboutPage() {
                 Eliyanto Sarage
               </h3>
               <div className="text-center mt-2">
-                <div className="badge badge-soft badge-primary">
+                <div className="badge badge-neutral">
                   Full Stack Developer
                 </div>
               </div>
@@ -183,6 +182,5 @@ export default function AboutPage() {
           {/* End of Author Box */}
         </section>
       </div>
-    </>
   );
 }

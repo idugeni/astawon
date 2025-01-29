@@ -39,7 +39,7 @@ export default function Footer() {
                   key={link.name}
                   href={link.url}
                   target="_blank"
-                  className="btn btn-circle btn-sm btn-ghost hover:bg-primary/20 text-xl"
+                  className="btn btn-circle btn-sm btn-ghost bg-white hover:bg-primary/20 text-xl"
                   aria-label={link.name}
                 >
                   {link.icon}
@@ -51,7 +51,7 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="lg:w-1/3 grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="footer-title text-lg font-semibold mb-4">Tautan Cepat</h3>
+              <h3 className="footer-title text-primary text-lg font-semibold mb-4">Tautan Cepat</h3>
               <ul className="space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.title}>
@@ -68,7 +68,7 @@ export default function Footer() {
 
             {/* Kontak */}
             <div>
-              <h3 className="footer-title text-lg font-semibold mb-4">Kontak</h3>
+              <h3 className="footer-title text-secondary text-lg font-semibold mb-4">Kontak</h3>
               <ul className="space-y-3 text-base-content/70">
                 <li className="flex items-center gap-2">
                   <FaMapPin className="text-primary shrink-0" />
@@ -88,7 +88,7 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div className="lg:w-1/3">
-            <h3 className="footer-title text-lg font-semibold mb-4">
+            <h3 className="footer-title text-accent text-lg font-semibold mb-4">
               Berlangganan Newsletter
             </h3>
             <form className="flex flex-col gap-3">
@@ -116,7 +116,7 @@ export default function Footer() {
             © {currentYear} ASTAWON - Humas Rutan Wonosobo. Hak Cipta Dilindungi.
           </p>
           <div className="flex gap-4">
-            <Link href="/privacy-policy" className="link link-hover">
+            <Link href="/privacy" className="link link-hover">
               Kebijakan Privasi
             </Link>
             <Link href="/terms" className="link link-hover">

@@ -36,7 +36,7 @@ export default function FeaturedSection() {
 
   return (
     <section
-      data-theme="business"
+      data-theme="abyss"
       className="relative py-24 bg-gradient-to-br from-slate-900 to-slate-800 w-full px-4 md:px-8 overflow-hidden"
     >
       {/* Background elements */}
