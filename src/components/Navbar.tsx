@@ -72,7 +72,7 @@ export default function Navbar() {
               className="btn btn-primary btn-md group rounded-full px-6 shadow-lg hover:shadow-primary/30"
             >
               <FaEnvelope className="h-4 w-4 transition-transform group-hover:scale-105" />
-              <span className="ml-2 hidden sm:block">Email Login</span>
+              <span className="ml-2 hidden sm:block">Login</span>
             </Link>
           </div>
         </div>

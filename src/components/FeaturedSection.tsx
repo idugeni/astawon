@@ -1,5 +1,7 @@
-import React from "react";
-import { FaNewspaper, FaUsers, FaPhotoFilm } from "react-icons/fa6";
+"use client";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { FaNewspaper, FaUsers, FaPhotoFilm, FaAnglesRight } from "react-icons/fa6";
 
 const services = [
   {
@@ -22,6 +24,16 @@ const services = [
 ];
 
 export default function FeaturedSection() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <section
       data-theme="business"
@@ -35,7 +47,7 @@ export default function FeaturedSection() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mx-auto mb-20 max-w-3xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 text-transparent bg-clip-text">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 pb-4 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 text-transparent bg-clip-text">
             Layanan Unggulan
           </h2>
           <p className="text-lg md:text-xl text-slate-300 mt-4 leading-relaxed">
@@ -55,13 +67,13 @@ export default function FeaturedSection() {
                 <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-blue-500/30 to-green-400/30" />
               </div>
 
-              <div className="relative z-10">
+                <div className="relative z-10 flex flex-col items-center text-center">
                 <div className="mb-6">
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center transform transition-transform duration-500">
-                    {service.icon &&
-                      React.createElement(service.icon, {
-                        className: "w-8 h-8 text-white",
-                      })}
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center transform transition-transform duration-500">
+                  {service.icon &&
+                    React.createElement(service.icon, {
+                    className: "w-8 h-8 text-white",
+                    })}
                   </div>
                 </div>
 
@@ -73,24 +85,12 @@ export default function FeaturedSection() {
                 </p>
 
                 <div className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                  <button className="flex items-center text-blue-400 hover:text-blue-300 font-medium">
-                    <span>Selengkapnya</span>
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
+                  <Link href="#" className="btn btn-primary btn-outline rounded-full text-white/75 hover:text-white font-medium space-x-2">
+                  <span>Selengkapnya</span>
+                  <FaAnglesRight />
+                  </Link>
                 </div>
-              </div>
+                </div>
             </div>
           ))}
         </div>

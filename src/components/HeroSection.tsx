@@ -69,7 +69,7 @@ export default function HeroSection() {
               className="btn btn-glass btn-lg group rounded-full px-8 transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
               <FaFile className="mr-3 text-xl transition-transform group-hover:rotate-12" />
-              <span className="text-lg font-bold">E-Dokumen</span>
+              <span className="text-lg font-bold">Documentation</span>
             </Link>
           </div>
         </div>

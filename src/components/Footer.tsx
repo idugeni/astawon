@@ -6,12 +6,12 @@ import {
   FaTwitter,
   FaInstagram,
   FaYoutube,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
+  FaMapPin,
+  FaPhone,
   FaEnvelope,
-} from 'react-icons/fa';
+} from 'react-icons/fa6';
 
-const Footer = () => {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -30,8 +30,8 @@ const Footer = () => {
               />
             </Link>
             <p className="text-center lg:text-left text-base-content/80 mb-6">
-              Platform komunikasi resmi Lembaga Pemasyarakatan Kelas IIB Wonosobo 
-              di bawah Kementerian Hukum dan HAM RI.
+              Platform komunikasi resmi Rumah Tahanan Negara Kelas IIB Wonosobo 
+              di bawah Kementerian Imigrasi dan Pemasyarakatan.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((link) => (
@@ -71,11 +71,11 @@ const Footer = () => {
               <h3 className="footer-title text-lg font-semibold mb-4">Kontak</h3>
               <ul className="space-y-3 text-base-content/70">
                 <li className="flex items-center gap-2">
-                  <FaMapMarkerAlt className="text-primary shrink-0" />
+                  <FaMapPin className="text-primary shrink-0" />
                   Jl. Kyai Tambak Deres No.12, Wonosobo, Jawa Tengah
                 </li>
                 <li className="flex items-center gap-2">
-                  <FaPhoneAlt className="text-primary shrink-0" />
+                  <FaPhone className="text-primary shrink-0" />
                   (0286) 321654
                 </li>
                 <li className="flex items-center gap-2">
@@ -95,7 +95,7 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Masukkan email Anda"
-                className="input input-bordered input-primary w-full"
+                className="input input-bordered input-primary w-full focus:outline-none"
               />
               <button
                 type="submit"
@@ -127,7 +127,7 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+}
 
 const socialLinks = [
   {
@@ -160,5 +160,3 @@ const quickLinks = [
   { title: 'FAQ', url: '/faq' },
   { title: 'Kontak', url: '/contact' },
 ];
-
-export default Footer;
