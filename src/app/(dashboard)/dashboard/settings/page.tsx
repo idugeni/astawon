@@ -1,197 +1,204 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import {
-  updatePassword,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
-  User,
-  onAuthStateChanged,
-  signOut,
-} from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
-import { useMetadata } from '@/utils/MetadataContext';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/lib/firebase";
+import { 
+  FaPalette,
+  FaBell,
+  FaShieldHalved,
+  FaTrash,
+  FaKey
+} from "react-icons/fa6";
+import { useState } from "react";
+import { deleteUser } from "firebase/auth";
+import Swal from "sweetalert2";
 
-export default function Settings() {
-  useMetadata(
-    'Settings',
-    'Change your account password and manage other account settings.'
-  );
-  const [user, setUser] = useState<User | null>(null);
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
-  const router = useRouter();
+export default function SettingsPage() {
+  const [user] = useAuthState(auth);
+  const [newEmail, setNewEmail] = useState(user?.email || "");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        setIsEmailVerified(user.emailVerified);
-      } else {
-        setUser(null);
-      }
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
     });
-    return () => unsubscribe();
-  }, []);
 
-  useEffect(() => {
-    if (user && !isEmailVerified) {
-      router.push('/dashboard/settings/verification');
+    if (result.isConfirmed) {
+      try {
+      setIsProcessing(true);
+      await deleteUser(user);
+      Swal.fire(
+        'Deleted!',
+        'Your account has been deleted.',
+        'success'
+      );
+      // Redirect to login or home page after deletion
+      } catch {
+      Swal.fire(
+        'Error!',
+        'There was an error deleting your account.',
+        'error'
+      );
+      // Handle re-authentication needed
+      } finally {
+      setIsProcessing(false);
+      }
     }
-  }, [user, isEmailVerified, router]);
-
-  useEffect(() => {
-    if (
-      currentPassword &&
-      newPassword &&
-      confirmPassword &&
-      newPassword === confirmPassword &&
-      newPassword !== currentPassword &&
-      newPassword.length >= 8 &&
-      isEmailVerified
-    ) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
-  }, [currentPassword, newPassword, confirmPassword, isEmailVerified]);
-
-  const handleChangePassword = async () => {
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: 'Semua kolom harus diisi.',
-      });
-      return;
-    }
-
-    if (newPassword === currentPassword) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: 'Password lama dan password baru tidak boleh sama.',
-      });
-      return;
-    }
-
-    if (newPassword !== confirmPassword) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: 'Password baru dan konfirmasi password tidak cocok.',
-      });
-      return;
-    }
-
-    if (newPassword.length < 8) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: 'Password baru harus terdiri dari minimal 8 karakter.',
-      });
-      return;
-    }
-
-    const userCredential = auth.currentUser;
-    if (!userCredential) return;
 
     try {
-      const credentials = EmailAuthProvider.credential(
-        userCredential.email!,
-        currentPassword
-      );
-      await reauthenticateWithCredential(userCredential, credentials);
-
-      await updatePassword(userCredential, newPassword);
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Password Berhasil Diubah',
-        text: 'Password Anda telah berhasil diubah.',
-      });
-
-      await signOut(auth);
-
-      router.push('/login');
+      setIsProcessing(true);
+      await deleteUser(user);
+      // Redirect to login or home page after deletion
     } catch (error) {
-      console.error('Error during password change:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Gagal Mengubah Password',
-        text: 'Pastikan password lama Anda benar.',
-      });
+      console.error("Error deleting account:", error);
+      // Handle re-authentication needed
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  if (!user) {
-    return (
-      <div className='fixed inset-0 w-screen h-screen bg-gradient-to-r from-base-300 via-base-200 to-base-100 flex justify-center items-center z-50'>
-        <span className='loading loading-infinity loading-xl'></span>
-      </div>
-    );
-  }
-
   return (
-    <div className='min-h-screen flex items-center justify-center p-4'>
-      <div className='card glass w-full max-w-lg shadow-xl p-6 space-y-4'>
-        <h2 className='text-center text-2xl font-semibold'>Pengaturan Akun</h2>
-
-        <div className='space-y-6'>
-          <div className='form-group'>
-            <label className='floating-label'>
-              <span>Password Lama</span>
-              <input
-                type='password'
-                placeholder='Password Lama'
-                className='input input-bordered border-none w-full focus:outline-none focus:border-transparent'
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                autoComplete='off'
-              />
+    <div className="space-y-6">
+      {/* Theme Settings */}
+      <div className="card bg-base-100 shadow">
+        <div className="card-body">
+          <h2 className="card-title">
+            <FaPalette className="text-xl" /> Appearance
+          </h2>
+          
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Theme</span>
             </label>
+            <select className="select select-bordered w-full max-w-xs">
+              <option>Light</option>
+              <option>Dark</option>
+              <option>System</option>
+            </select>
           </div>
+        </div>
+      </div>
 
-          <div className='form-group'>
-            <label className='floating-label'>
-              <span>Password Baru</span>
-              <input
-                type='password'
-                placeholder='Password Baru'
-                className='input input-bordered border-none w-full focus:outline-none focus:border-transparent'
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                autoComplete='off'
-              />
-            </label>
+      {/* Notifications */}
+      <div className="card bg-base-100 shadow">
+        <div className="card-body">
+          <h2 className="card-title">
+            <FaBell className="text-xl" /> Notifications
+          </h2>
+          
+          <div className="space-y-2">
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Email Notifications</span>
+                <input 
+                  type="checkbox" 
+                  className="toggle toggle-primary" 
+                  defaultChecked 
+                />
+              </label>
+            </div>
+            
+            <div className="form-control">
+              <label className="label cursor-pointer">
+                <span className="label-text">Push Notifications</span>
+                <input 
+                  type="checkbox" 
+                  className="toggle toggle-primary" 
+                  defaultChecked 
+                />
+              </label>
+            </div>
           </div>
+        </div>
+      </div>
 
-          <div className='form-group'>
-            <label className='floating-label'>
-              <span>Konfirmasi Password Baru</span>
-              <input
-                type='password'
-                placeholder='Konfirmasi Password Baru'
-                className='input input-bordered border-none w-full focus:outline-none focus:border-transparent'
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                autoComplete='off'
-              />
-            </label>
+      {/* Account Security */}
+      <div className="card bg-base-100 shadow">
+        <div className="card-body">
+          <h2 className="card-title">
+            <FaShieldHalved className="text-xl" /> Security
+          </h2>
+          
+          <div className="space-y-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text flex items-center gap-2">
+                  <FaKey /> Change Email
+                </span>
+              </label>
+              <div className="join w-full">
+                <input
+                  type="email"
+                  className="input input-bordered join-item w-full"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                />
+                <button className="btn btn-outline join-item">
+                  Update Email
+                </button>
+              </div>
+            </div>
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text flex items-center gap-2">
+                  <FaKey /> Change Password
+                </span>
+              </label>
+              <div className="join w-full">
+                <input
+                  type="password"
+                  placeholder="Current Password"
+                  className="input input-bordered join-item w-full"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+                <button className="btn btn-outline join-item">
+                  Change Password
+                </button>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          <button
-            className='btn btn-primary w-full'
-            onClick={handleChangePassword}
-            disabled={isButtonDisabled}
-          >
-            Ubah Password
-          </button>
+      {/* Dangerous Zone */}
+      <div className="card bg-base-100 shadow border border-error">
+        <div className="card-body">
+          <h2 className="card-title text-error">
+            <FaTrash className="text-xl" /> Dangerous Zone
+          </h2>
+          
+          <div className="space-y-4">
+            <div className="alert alert-error">
+              <div>
+                <span>Permanent account deletion. This action cannot be undone.</span>
+              </div>
+            </div>
+            
+            <button 
+              className="btn btn-error w-full"
+              onClick={handleDeleteAccount}
+              disabled={isProcessing}
+            >
+              {isProcessing ? (
+                <span className="loading loading-infinity"></span>
+              ) : (
+                <>
+                  <FaTrash /> Delete Account
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </div>

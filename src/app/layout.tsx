@@ -1,10 +1,8 @@
-// src/app/layout.tsx
 "use client";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 
 const poppins = Poppins({
@@ -15,21 +13,13 @@ const poppins = Poppins({
   preload: true,
 });
 
-function LoadingFallback() {
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="loading loading-spinner loading-lg"></div>
-    </div>
-  );
-}
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isDashboard = pathname === "/dashboard";
+  const isDashboard = pathname.startsWith("/dashboard");
 
   return (
     <html
@@ -38,21 +28,9 @@ export default function RootLayout({
       className={`${poppins.variable} scroll-smooth`}
     >
       <body className="min-h-screen flex flex-col">
-        {!isDashboard && (
-          <Suspense fallback={<LoadingFallback />}>
-            <Navbar />
-          </Suspense>
-        )}
-
-        <main className="flex-grow">
-          <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
-        </main>
-
-        {!isDashboard && (
-          <Suspense fallback={<LoadingFallback />}>
-            <Footer />
-          </Suspense>
-        )}
+        {!isDashboard && <Navbar />}
+        {children}
+        {!isDashboard && <Footer />}
       </body>
     </html>
   );

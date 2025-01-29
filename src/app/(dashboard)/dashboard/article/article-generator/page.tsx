@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { FaArrowLeft, FaSpinner, FaPenToSquare } from 'react-icons/fa6';
 import Link from 'next/link';
-import { useMetadata } from '@/utils/MetadataContext';
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 // API Configuration
 const API_URL =
@@ -23,10 +23,7 @@ interface ArticleSection {
 }
 
 export default function ArticleGenerator() {
-  useMetadata(
-    'Article Generator',
-    'Create high-quality, SEO-friendly articles based on your input.'
-  );
+  useDocumentTitle("Article Generator");
 
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);
