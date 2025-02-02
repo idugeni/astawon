@@ -8,7 +8,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div data-theme="night">
       <nav className="sticky top-0 z-50 border-b border-base-200 bg-base-100/80 backdrop-blur-md transition-all duration-300">
         <div className="navbar container mx-auto px-4">
           <div className="navbar-start">
@@ -110,6 +109,5 @@ export default function Navbar() {
           </ul>
         </div>
       </nav>
-    </div>
   );
 }

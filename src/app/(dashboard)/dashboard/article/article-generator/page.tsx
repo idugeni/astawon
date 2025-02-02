@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { FaArrowLeft, FaSpinner, FaPenToSquare } from 'react-icons/fa6';
 import Link from 'next/link';
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMetadata } from "@/hooks/useMetadata";
 
 // API Configuration
 const API_URL =
@@ -23,7 +23,7 @@ interface ArticleSection {
 }
 
 export default function ArticleGenerator() {
-  useDocumentTitle("Article Generator");
+  useMetadata("Article Generator", "Generate article content with AI");
 
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(false);

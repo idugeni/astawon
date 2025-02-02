@@ -23,7 +23,6 @@ export default function RootLayout({
 
   return (
     <html
-      data-theme="business"
       lang="id"
       className={`${poppins.variable} scroll-smooth`}
     >

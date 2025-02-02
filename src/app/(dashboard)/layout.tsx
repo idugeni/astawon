@@ -70,7 +70,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <div data-theme="corporate" className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
       
       {/* Content Area */}

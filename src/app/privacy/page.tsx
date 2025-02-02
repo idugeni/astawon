@@ -1,15 +1,6 @@
 export default function PrivacyPage() {
   return (
-    <div data-theme="night">
-      <nav className="navbar bg-base-200">
-        <div className="container mx-auto">
-          <div className="flex-1">
-            <a className="btn btn-ghost text-xl">ASTAWON</a>
-          </div>
-        </div>
-      </nav>
-
-      <main className="container mx-auto px-4 py-8">
+      <main className="mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Privacy Policy</h1>
           <p className="text-lg opacity-75">
@@ -21,7 +12,7 @@ export default function PrivacyPage() {
           <div className="card-body">
             <h2 className="card-title text-2xl mb-4">Introduction</h2>
             <p className="text-base-content/90">
-              ASTAWON ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy 
+              ASTAWON (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy 
               explains how we collect, use, and safeguard your information when you use our digital platform 
               designed for managing information and delivering updates related to Rutan Wonosobo.
             </p>
@@ -65,12 +56,5 @@ export default function PrivacyPage() {
           </div>
         </div>
       </main>
-
-      <footer className="footer footer-center p-4 bg-base-200 text-base-content">
-        <aside>
-          <p>© 2024 ASTAWON - HUMAS RUTAN WONOSOBO. All rights reserved</p>
-        </aside>
-      </footer>
-    </div>
   )
 }

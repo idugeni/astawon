@@ -7,10 +7,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMetadata } from "@/hooks/useMetadata";
 
 export default function RegisterPage() {
-  useDocumentTitle("Register");
+  useMetadata("Register", "Register page for the admin panel");
 
   const [formData, setFormData] = useState({
     name: "",

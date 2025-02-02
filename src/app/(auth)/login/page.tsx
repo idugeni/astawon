@@ -8,10 +8,10 @@ import Image from "next/image";
 import { FaEnvelope, FaLock } from "react-icons/fa6";
 import { validateInputs } from "@/utils/validate";
 import Swal from "sweetalert2";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMetadata } from "@/hooks/useMetadata";
 
 export default function LoginPage() {
-  useDocumentTitle("Login");
+  useMetadata("Login", "Login page for the admin panel");
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const router = useRouter();

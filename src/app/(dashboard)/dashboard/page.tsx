@@ -2,7 +2,7 @@
 
 import { FaArrowTrendUp, FaCalendarCheck, FaUsers } from "react-icons/fa6";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMetadata } from "@/hooks/useMetadata";
 
 // Mock data untuk chart
 const chartData = [
@@ -29,7 +29,7 @@ interface Activity {
 }
 
 export default function DashboardPage() {
-  useDocumentTitle('Dashboard');
+  useMetadata('Dashboard' , 'Dashboard page for the admin panel');
   // Mock data untuk recent activities
   const recentActivities: Activity[] = [
     { id: 1, title: 'New user registered', time: '5 min ago', type: 'user' },

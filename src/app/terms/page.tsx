@@ -1,6 +1,6 @@
 export default function TermsPage() {
   return (
-    <div data-theme="corporate">
+    <div>
       <nav className="navbar bg-base-200">
         <div className="container mx-auto">
           <div className="flex-1">

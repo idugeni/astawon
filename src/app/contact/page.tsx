@@ -5,12 +5,12 @@
 import React from "react";
 import { FaEnvelope, FaPhone, FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMetadata } from "@/hooks/useMetadata";
 
 export default function ContactPage() {
-  useDocumentTitle("Contact");
+  useMetadata("Contact", "Contact page for ASTAWON platform");
   return (
-      <div data-theme="abyss" className="min-h-screen bg-base-100 p-8 sm:p-16 transition-all duration-700 ease-in-out">
+      <div className="min-h-screen bg-base-100 p-8 sm:p-16 transition-all duration-700 ease-in-out">
         <section className="max-w-7xl mx-auto">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-center mb-6 pb-2 bg-gradient-to-r from-pink-500 to-orange-400 text-transparent bg-clip-text">
             Contact

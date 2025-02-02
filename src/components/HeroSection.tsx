@@ -5,7 +5,7 @@ import { FaRocket, FaFile, FaRegStar, FaWaveSquare } from "react-icons/fa6";
 
 export default function HeroSection() {
   return (
-    <section data-theme="abyss" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Layers */}
       <div className="absolute inset-0 z-0">
         <Image

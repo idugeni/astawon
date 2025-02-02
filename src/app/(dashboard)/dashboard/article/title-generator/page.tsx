@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
 import Link from 'next/link';
-import { useDocumentTitle } from '@/hooks/useDocumentTitle';
+import { useMetadata } from '@/hooks/useMetadata';
 
 const API_URL =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
@@ -17,7 +17,7 @@ const generationConfig = {
 };
 
 export default function ArticleTitleGenerator() {
-  useDocumentTitle('Title Generator');
+  useMetadata('Title Generator', 'Generate SEO-optimized article titles with AI');
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);

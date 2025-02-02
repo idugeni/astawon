@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { FaHeading, FaPenFancy } from 'react-icons/fa6';
-import { useDocumentTitle } from "@/hooks/useDocumentTitle";
+import { useMetadata } from "@/hooks/useMetadata";
 
 export default function ArticleDashboard() {
-  useDocumentTitle("Article Management");
+  useMetadata("Article Management", "Dashboard for article management");
 
   return (
     <div className='p-8 max-w-7xl mx-auto min-h-screen flex flex-col'>

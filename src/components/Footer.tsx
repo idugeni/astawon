@@ -15,7 +15,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer data-theme="night" className="bg-gradient-to-r from-primary/10 to-secondary/10 relative">
+    <footer className="bg-gradient-to-r from-primary/10 to-secondary/10 relative">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12">
           {/* Brand Section */}
