@@ -4,7 +4,7 @@ import { siteConfig } from '@/config/metadata'
 
 export function useMetadata(title: string, description?: string) {
   useEffect(() => {
-    document.title = `${title} | ${siteConfig.name}`
+    document.title = `${title} - ${siteConfig.name}`
     
     const metaDescription = document.querySelector("meta[name='description']")
     const prevDescription = metaDescription ? metaDescription.getAttribute('content') : ''

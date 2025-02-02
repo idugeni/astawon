@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Link from "next/link";
 import { auth } from "@/lib/firebase";
 import {
   updateProfile,
@@ -172,23 +173,22 @@ export default function SettingsPage() {
         </div>
 
         <div role="tablist" className="tabs tabs-box justify-center bg-base-200 p-1 rounded-box">
-          <button
-            className={`tab tab-lg transition-all duration-300 rounded-lg ${activeSection === "profile" ? "tab-active bg-ghost text-primary" : ""
-              }`}
+          <Link
+            href="#"
+            className={`tab tab-lg transition-all duration-300 rounded-lg ${activeSection === "profile" ? "tab-active bg-ghost text-primary" : ""}`}
             onClick={() => setActiveSection("profile")}
-            type="button"
           >
             Profile
-          </button>
-          <button
-            className={`tab tab-lg transition-all duration-300 rounded-lg ${activeSection === "security" ? "tab-active bg-ghost text-primary" : ""
-              }`}
+          </Link>
+          <Link
+            href="#"
+            className={`tab tab-lg transition-all duration-300 rounded-lg ${activeSection === "security" ? "tab-active bg-ghost text-primary" : ""}`}
             onClick={() => setActiveSection("security")}
-            type="button"
           >
             Security
-          </button>
+          </Link>
         </div>
+
 
         <form onSubmit={handleProfileUpdate} className="space-y-8">
           {activeSection === "profile" && (
@@ -252,13 +252,16 @@ export default function SettingsPage() {
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={isSubmitting || validateForm() !== ""}
-            className="btn btn-primary w-full gap-2 font-medium
-                     transition-all duration-300 rounded-md
-                     hover:shadow-md hover:shadow-primary/20
-                     disabled:opacity-50 disabled:cursor-not-allowed"
+          <Link
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (!isSubmitting && validateForm() === "") {
+                // Simulasi pengiriman atau aksi yang dilakukan tombol
+                // Tempatkan logika yang seharusnya terjadi saat tombol di-klik di sini
+              }
+            }}
+            className={`btn btn-primary w-full gap-2 font-medium transition-all duration-300 rounded-md hover:shadow-md hover:shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed ${isSubmitting || validateForm() !== "" ? "disabled" : ""}`}
           >
             {isSubmitting ? (
               <>
@@ -268,7 +271,7 @@ export default function SettingsPage() {
             ) : (
               "Save Changes"
             )}
-          </button>
+          </Link>
         </form>
       </div>
     </div>

@@ -1,8 +1,7 @@
-// src/app/(dashboard)/dashboard/article/article-generator/page.tsx
 'use client';
 
 import { useState } from 'react';
-import { FaArrowLeft, FaSpinner, FaPenToSquare } from 'react-icons/fa6';
+import { FaArrowLeft, FaPenToSquare } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useMetadata } from "@/hooks/useMetadata";
 
@@ -143,22 +142,18 @@ export default function ArticleGenerator() {
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center p-8'>
-      {/* Container untuk Back Button */}
       <div className='w-full mb-4'>
         <Link href='/dashboard/article' className='btn btn-ghost gap-2'>
           <FaArrowLeft /> Kembali
         </Link>
       </div>
 
-      {/* Card Container */}
       <div className='w-full max-w-4xl bg-base-100 shadow-xl p-6 rounded-lg'>
         <div className='flex flex-col items-start'>
-          {/* Judul */}
           <h1 className='text-4xl font-bold text-center w-full mb-6'>
             Article Generator
           </h1>
 
-          {/* Input Section */}
           <div className='w-full mb-4'>
             <fieldset className='fieldset'>
               <legend className='fieldset-legend'>Input Article Title</legend>
@@ -175,18 +170,15 @@ export default function ArticleGenerator() {
             </fieldset>
           </div>
 
-          {/* Tombol Generate */}
-          <button
-            className={`btn btn-primary w-full transition-all duration-300 ${
-              loading ? 'loading' : ''
-            }`}
+          <Link
+            href='#'
+            className={`btn btn-primary w-full transition-all duration-300 ${loading ? 'loading' : ''}`}
             onClick={generateArticle}
-            disabled={loading || !title}
+            aria-disabled={loading || !title}
           >
             {loading ? (
               <>
-                <FaSpinner className='animate-spin mr-2' />
-                Generating Article...
+                <span className='loading loading-spinner'></span>Generating Article...
               </>
             ) : (
               <>
@@ -194,21 +186,18 @@ export default function ArticleGenerator() {
                 Generate Article
               </>
             )}
-          </button>
+          </Link>
 
-          {/* Error Handling */}
           {error && (
             <div className='alert alert-error mt-4 w-full'>
               <span>{error}</span>
             </div>
           )}
 
-          {/* Hasil Output */}
           {generatedArticle && (
             <div className='w-full mt-8'>
               <h2 className='text-2xl font-semibold mb-4'>Generated Article</h2>
 
-              {/* Introduction */}
               <div className='mb-6'>
                 <h3 className='text-xl font-medium mb-2'>Introduction</h3>
                 <p className='prose max-w-none'>
@@ -216,7 +205,6 @@ export default function ArticleGenerator() {
                 </p>
               </div>
 
-              {/* Sections */}
               {generatedArticle.sections.map((section, index) => (
                 <div key={index} className='mb-6'>
                   <h3 className='text-xl font-medium mb-2'>{section.title}</h3>
@@ -224,7 +212,6 @@ export default function ArticleGenerator() {
                 </div>
               ))}
 
-              {/* Conclusion */}
               <div className='mb-6'>
                 <h3 className='text-xl font-medium mb-2'>Conclusion</h3>
                 <p className='prose max-w-none'>
@@ -232,7 +219,6 @@ export default function ArticleGenerator() {
                 </p>
               </div>
 
-              {/* Meta Description */}
               <div className='mb-6'>
                 <h3 className='text-xl font-medium mb-2'>Meta Description</h3>
                 <p className='prose max-w-none'>
@@ -240,14 +226,13 @@ export default function ArticleGenerator() {
                 </p>
               </div>
 
-              {/* Copy Button */}
               <div className='flex justify-end mt-4'>
-                <button
+                <Link
+                  href="#"
                   className='btn btn-secondary'
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `${
-                        generatedArticle.introduction
+                      `${generatedArticle.introduction
                       }\n\n${generatedArticle.sections
                         .map((s) => `${s.title}\n${s.content}`)
                         .join('\n\n')}\n\n${generatedArticle.conclusion}`
@@ -255,7 +240,7 @@ export default function ArticleGenerator() {
                   }
                 >
                   Copy Full Article
-                </button>
+                </Link>
               </div>
             </div>
           )}

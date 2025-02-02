@@ -10,8 +10,8 @@ export const siteConfig = {
 
 export const defaultMetadata: Metadata = {
   title: {
-    default: `${siteConfig.name} - HUMAS RUTAN WONOSOBO`,
-    template: `%s | ${siteConfig.name}`,
+    default: `${siteConfig.name} | HUMAS RUTAN WONOSOBO`,
+    template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),

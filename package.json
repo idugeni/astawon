@@ -12,10 +12,9 @@
   "dependencies": {
     "@firebase/app": "^0.10.18",
     "@firebase/auth": "^1.8.2",
-    "@genkit-ai/googleai": "^0.9.12",
+    "@google/generative-ai": "^0.21.0",
     "@vercel/og": "^0.6.5",
     "firebase": "^11.2.0",
-    "genkit": "^0.9.12",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

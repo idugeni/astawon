@@ -188,20 +188,19 @@ export default function RegisterPage() {
 
             {/* Register Button */}
             <div className="form-control mt-6">
-              <button
-                type="submit"
-                className="btn w-full btn-primary"
-                disabled={loading}
+              <Link
+                href="#"
+                className={`btn w-full btn-primary ${loading ? 'pointer-events-none' : ''}`}
+                onClick={(e) => e.preventDefault()}
               >
                 {loading ? (
                   <div className="flex items-center justify-center">
-                    <span className="loading loading-infinity loading-lg"></span>
-                    <span className="ml-2">Loading...</span>
+                    <span className="loading loading-infinity loading-lg text-primary">Loading...</span>
                   </div>
                 ) : (
                   "Daftar"
                 )}
-              </button>
+              </Link>
             </div>
           </form>
           <p className="text-center text-sm mt-4">

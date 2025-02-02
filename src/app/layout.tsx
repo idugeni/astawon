@@ -1,9 +1,12 @@
 "use client";
+
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import Loading from "@/app/loading";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -20,16 +23,28 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
   const isDashboard = pathname.startsWith("/dashboard");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   return (
-    <html
-      lang="id"
-      className={`${poppins.variable} scroll-smooth`}
-    >
+    <html data-theme="night" lang="id" className={`${poppins.variable} scroll-smooth`}>
       <body className="min-h-screen flex flex-col">
-        {!isDashboard && <Navbar />}
-        {children}
-        {!isDashboard && <Footer />}
+        {loading && <Loading />}
+        {!loading && (
+          <>
+            {!isDashboard && <Navbar />}
+            {children}
+            {!isDashboard && <Footer />}
+          </>
+        )}
       </body>
     </html>
   );

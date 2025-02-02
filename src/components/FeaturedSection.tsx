@@ -35,22 +35,19 @@ export default function FeaturedSection() {
   }
 
   return (
-    <section
-     
-      className="relative py-24 bg-gradient-to-br from-slate-900 to-slate-800 w-full px-4 md:px-8 overflow-hidden"
-    >
+    <section className="relative py-24 bg-gradient-to-br from-background to-secondary w-full px-4 md:px-8 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute w-[800px] h-[800px] -top-[400px] -left-[400px] from-emerald-400/30 to-transparent rounded-full blur-3xl" />
-        <div className="absolute w-[800px] h-[800px] -top-[300px] -right-[400px] from-blue-400/30 to-transparent rounded-full blur-3xl" />
+        <div className="absolute w-[800px] h-[800px] -top-[400px] -left-[400px] from-primary/30 to-transparent rounded-full blur-3xl" />
+        <div className="absolute w-[800px] h-[800px] -top-[300px] -right-[400px] from-accent/30 to-transparent rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mx-auto mb-20 max-w-3xl">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 pb-4 bg-gradient-to-r from-blue-400 via-green-300 to-blue-400 text-transparent bg-clip-text">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 pb-4 bg-gradient-to-r from-primary via-accent to-primary text-transparent bg-clip-text">
             Layanan Unggulan
           </h2>
-          <p className="text-lg md:text-xl text-slate-300 mt-4 leading-relaxed">
+          <p className="text-lg md:text-xl text-base-content/70 mt-4 leading-relaxed">
             Temukan kemudahan akses layanan publik melalui portal digital kami
             yang dirancang untuk memberikan pengalaman terbaik bagi masyarakat.
           </p>
@@ -60,37 +57,37 @@ export default function FeaturedSection() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 transition-all duration-500 hover:border-white/20 hover:-translate-y-2 hover:shadow-2xl"
+              className="group relative bg-base-200 backdrop-blur-sm border border-base-content/10 rounded-2xl p-8 transition-all duration-500 hover:border-base-content/20 hover:-translate-y-2 hover:shadow-2xl"
             >
               {/* Animated border effect */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-blue-500/30 to-green-400/30" />
+                <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-primary/30 to-accent/30" />
               </div>
 
-                <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="relative z-10 flex flex-col items-center text-center">
                 <div className="mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center transform transition-transform duration-500">
-                  {service.icon &&
-                    React.createElement(service.icon, {
-                    className: "w-8 h-8 text-white",
-                    })}
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center transform transition-all duration-500 group-hover:from-accent group-hover:to-primary">
+                    {service.icon &&
+                      React.createElement(service.icon, {
+                        className: "w-8 h-8 text-base-content transition-colors duration-500 group-hover:text-primary-content",
+                      })}
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-semibold text-white mb-4">
+                <h3 className="text-2xl font-semibold text-base-content mb-4">
                   {service.title}
                 </h3>
-                <p className="text-slate-300 leading-relaxed mb-6">
+                <p className="text-base-content/70 leading-relaxed mb-6">
                   {service.description}
                 </p>
 
-                <div className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                  <Link href="#" className="btn btn-primary btn-outline rounded-full text-white/75 hover:text-white font-medium space-x-2">
-                  <span>Selengkapnya</span>
-                  <FaAnglesRight />
+                <div className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500 flex justify-center items-center">
+                  <Link href="#" className="btn btn-primary btn-soft rounded-full text-primary hover:text-primary-content font-medium space-x-2">
+                    <span>Selengkapnya</span>
+                    <FaAnglesRight />
                   </Link>
                 </div>
-                </div>
+              </div>
             </div>
           ))}
         </div>

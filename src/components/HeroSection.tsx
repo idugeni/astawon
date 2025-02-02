@@ -31,19 +31,19 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 lg:px-8">
         <div className="max-w-5xl mx-auto backdrop-blur-lg rounded-3xl border border-white/10 bg-base-100/20 p-8 shadow-2xl">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6">
+          <h1 className="text-center text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6">
             <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-text-shine">
               ASTAWON
             </span>
           </h1>
 
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6">
+          <h2 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold mb-6">
             <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
               Inovasi Digital Humas Rutan Wonosobo
             </span>
           </h2>
 
-          <p className="text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 font-medium text-neutral-content">
+          <p className="text-center text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 font-medium text-neutral-content">
             Platform terintegrasi untuk transformasi digital layanan informasi
             <span className="mx-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent font-bold">
               berbasis transparansi
@@ -58,7 +58,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/login"
-              className="btn btn-primary btn-lg group rounded-full px-8 transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/30"
+              className="btn btn-neutral btn-lg group rounded-full px-8 transform transition-all duration-300 hover:scale-105"
             >
               <FaRocket className="mr-3 text-xl animate-bounce group-hover:animate-none" />
               <span className="text-lg font-bold">Mulai Sekarang</span>
@@ -66,7 +66,7 @@ export default function HeroSection() {
 
             <Link
               href="/about"
-              className="btn btn-glass btn-lg group rounded-full px-8 transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              className="btn btn-accent btn-lg group rounded-full px-8 transform transition-all duration-300 hover:scale-105"
             >
               <FaFile className="mr-3 text-xl transition-transform group-hover:rotate-12" />
               <span className="text-lg font-bold">Documentation</span>

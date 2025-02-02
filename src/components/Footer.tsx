@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   FaFacebook,
-  FaTwitter,
+  FaXTwitter,
   FaInstagram,
   FaYoutube,
   FaMapPin,
@@ -30,8 +30,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-center lg:text-left text-base-content/80 mb-6">
-              Platform komunikasi resmi Rumah Tahanan Negara Kelas IIB Wonosobo 
-              di bawah Kementerian Imigrasi dan Pemasyarakatan.
+              ASTAWON adalah platform digital yang dirancang untuk mempermudah pengelolaan informasi dan penyampaian perkembangan terkini tentang Rutan Wonosobo.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((link) => (
@@ -39,7 +38,7 @@ export default function Footer() {
                   key={link.name}
                   href={link.url}
                   target="_blank"
-                  className="btn btn-circle btn-sm btn-ghost bg-white hover:bg-primary/20 text-xl"
+                  className="btn btn-circle btn-sm btn-ghost bg-base-100 hover:bg-primary/20 text-xl"
                   aria-label={link.name}
                 >
                   {link.icon}
@@ -48,8 +47,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="lg:w-1/3 grid md:grid-cols-2 gap-8">
+          {/* Quick Links and Kontak Section */}
+          <div className="lg:w-2/3 grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="footer-title text-primary text-lg font-semibold mb-4">Tautan Cepat</h3>
               <ul className="space-y-3">
@@ -72,38 +71,18 @@ export default function Footer() {
               <ul className="space-y-3 text-base-content/70">
                 <li className="flex items-center gap-2">
                   <FaMapPin className="text-primary shrink-0" />
-                  Jl. Kyai Tambak Deres No.12, Wonosobo, Jawa Tengah
+                  Jl. Pramuka No. 1, Sumberan Barat, Wonosobo Barat, Kec. Wonosobo, Kab. Wonosobo, Jawa Tengah, 56311
                 </li>
                 <li className="flex items-center gap-2">
                   <FaPhone className="text-primary shrink-0" />
-                  (0286) 321654
+                  (0286) 321030
                 </li>
                 <li className="flex items-center gap-2">
                   <FaEnvelope className="text-primary shrink-0" />
-                  humas@rutanwonosobo.go.id
+                  rutanwsb@gmail.com
                 </li>
               </ul>
             </div>
-          </div>
-
-          {/* Newsletter */}
-          <div className="lg:w-1/3">
-            <h3 className="footer-title text-accent text-lg font-semibold mb-4">
-              Berlangganan Newsletter
-            </h3>
-            <form className="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Masukkan email Anda"
-                className="input input-bordered input-primary w-full focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="btn btn-primary btn-outline w-full"
-              >
-                Berlangganan
-              </button>
-            </form>
           </div>
         </div>
 
@@ -133,22 +112,22 @@ const socialLinks = [
   {
     name: 'Facebook',
     url: 'https://facebook.com/rutanwonosobo',
-    icon: <FaFacebook className="text-blue-600" />,
+    icon: <FaFacebook className="text-primary" />,
   },
   {
     name: 'Twitter',
     url: 'https://x.com/RutanWonosobo',
-    icon: <FaTwitter className="text-neutral-900" />,
+    icon: <FaXTwitter className="text-base-content" />,
   },
   {
     name: 'Instagram',
     url: 'https://www.instagram.com/rutanwonosobo/',
-    icon: <FaInstagram className="text-pink-500" />,
+    icon: <FaInstagram className="text-accent" />,
   },
   {
     name: 'YouTube',
     url: 'https://www.youtube.com/@rutanwonosobo9933',
-    icon: <FaYoutube className="text-red-600" />,
+    icon: <FaYoutube className="text-error" />,
   },
 ];
 
@@ -156,7 +135,5 @@ const quickLinks = [
   { title: 'Tentang Kami', url: '/about' },
   { title: 'Berita & Artikel', url: '/news' },
   { title: 'Layanan Publik', url: '/services' },
-  { title: 'Karir', url: '/career' },
-  { title: 'FAQ', url: '/faq' },
   { title: 'Kontak', url: '/contact' },
 ];

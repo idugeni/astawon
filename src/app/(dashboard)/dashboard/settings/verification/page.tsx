@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { sendEmailVerification } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Swal from 'sweetalert2';
 
 import { User } from 'firebase/auth';
@@ -69,7 +70,7 @@ const VerificationPage = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center p-4'>
+    <div className='h-screen w-screen flex items-center justify-center'>
       <div className='card glass w-full max-w-lg shadow-xl p-6 space-y-4'>
         <h2 className='text-center text-2xl font-semibold'>Verifikasi Email</h2>
 
@@ -79,12 +80,16 @@ const VerificationPage = () => {
           </p>
 
           {!isVerificationSent ? (
-            <button
-              className='btn btn-primary w-full'
-              onClick={handleSendVerification}
+            <Link
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSendVerification();
+              }}
+              className="btn btn-primary w-full"
             >
               Kirim Email Verifikasi
-            </button>
+            </Link>
           ) : (
             <p className='text-center text-sm text-gray-500'>
               Email verifikasi telah dikirim. Silakan cek inbox Anda. Anda dapat

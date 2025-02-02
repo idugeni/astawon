@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FaArrowLeft } from 'react-icons/fa6';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useMetadata } from '@/hooks/useMetadata';
 
@@ -47,32 +47,28 @@ export default function ArticleTitleGenerator() {
                 parts: [
                   {
                     text: `Anda adalah seorang ahli SEO dan copywriter profesional yang berspesialisasi dalam membuat judul artikel berita yang menarik dan optimal untuk SEO. 
-                     Tugas Anda adalah menghasilkan judul artikel dalam Bahasa Indonesia yang:
-                     - Gunakan kata-kata yang kuat dan spesifik
-                     - Hindari penggunaan singkatan atau istilah yang tidak umum
-                     - Gunakan kalimat aktif
-                     - Hindari kalimat tanya
-                     - Gunakan bahasa baku
-                     - Netral dan tidak didramatisasi
-                     - Mengandung kata kunci utama
-                     - Optimal untuk SEO
-                     - Informatif
-                     - Menggunakan power words
-                     - Membangun citra positif
+                          Tugas Anda adalah menghasilkan judul artikel dalam Bahasa Indonesia dengan kriteria berikut:
+                          - Gunakan kata-kata yang kuat dan spesifik
+                          - Hindari penggunaan singkatan atau istilah yang tidak umum
+                          - Gunakan kalimat aktif
+                          - Hindari kalimat tanya
+                          - Gunakan bahasa baku
+                          - Netral dan tidak didramatisasi
+                          - Mengandung kata kunci utama
+                          - Optimal untuk SEO
+                          - Informatif
+                          - Menggunakan power words
+                          - Membangun citra positif
+                          - Menarik perhatian pembaca
 
-                     Buatkan 10 judul artikel SEO-friendly berdasarkan input berikut: ${input}
+                          Buatkan 5 judul artikel SEO-friendly berdasarkan input berikut: ${input}
 
-                     Format output:
-                     1. [Judul 1]
-                     2. [Judul 2]
-                     3. [Judul 3]
-                     4. [Judul 4]
-                     5. [Judul 5]
-                     6. [Judul 6]
-                     7. [Judul 7]
-                     8. [Judul 8]
-                     9. [Judul 9]
-                     10. [Judul 10]`,
+                          Format output:
+                          1. [Judul 1]
+                          2. [Judul 2]
+                          3. [Judul 3]
+                          4. [Judul 4]
+                          5. [Judul 5]`,
                   },
                 ],
               },
@@ -110,9 +106,12 @@ export default function ArticleTitleGenerator() {
   return (
     <div className='min-h-screen w-full flex flex-col items-center p-8'>
       {/* Container untuk Back Button */}
-      <div className='w-full mb-4'>
-        <Link href='/dashboard/article' className='btn btn-ghost gap-2'>
+      <div className='w-full flex justify-between mb-4'>
+        <Link href='/dashboard/article' className='btn btn-ghost gap-2 flex items-center'>
           <FaArrowLeft /> Kembali
+        </Link>
+        <Link href='/dashboard/next-page' className='btn btn-ghost gap-2 flex items-center'>
+          Lanjut <FaArrowRight />
         </Link>
       </div>
 
@@ -134,7 +133,7 @@ export default function ArticleTitleGenerator() {
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
             />
-            <div className='fieldset-label'>
+            <div className='fieldset-label text-xs text-base-content'>
               Describe the content you need to create a title for
             </div>
           </fieldset>
@@ -142,22 +141,21 @@ export default function ArticleTitleGenerator() {
 
         {/* Container untuk Tombol Generate */}
         <div className='w-full mb-4'>
-          <button
+          <Link
+            href="#"
             className='btn btn-primary btn-soft w-full transition-all duration-300'
             onClick={generateTitles}
-            disabled={loading || !input}
           >
             {loading ? (
               <>
-                <span className='loading loading-infinity loading-xl'></span>
-                <span className='ml-2'>Sedang membuat judul...</span>
+                <span className='loading loading-spinner'></span>Sedang membuat judul...
               </>
             ) : titles.length > 0 ? (
               'Generate Again'
             ) : (
               'Generate'
             )}
-          </button>
+          </Link>
         </div>
 
         {/* Container untuk Tabel Judul */}

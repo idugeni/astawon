@@ -37,24 +37,21 @@ export default function LoginPage() {
 
       Swal.fire({
         icon: "success",
-        title: "Selamat Datang Kembali!",
-        text: "Anda berhasil masuk. Mohon tunggu, Anda akan diarahkan ke dashboard dalam beberapa saat.",
-        timer: 2000,
+        title: "Selamat Datang Kembali! 🎉",
+        text: "Login berhasil! Mohon tunggu, Anda akan diarahkan ke dashboard dalam beberapa saat.",
+        timer: 2500,
         timerProgressBar: true,
         showConfirmButton: false,
+        willClose: () => router.push("/dashboard"),
       });
-
-      // Menunggu SweetAlert selesai sebelum redirect
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 2000);
     } catch {
       setLoading(false);
 
       Swal.fire({
         icon: "error",
-        title: "Login Gagal",
-        text: "Email atau password salah. Silakan coba lagi.",
+        title: "Login Gagal 😞",
+        text: "Email atau password yang Anda masukkan salah. Silakan coba lagi.",
+        confirmButtonText: "Coba Lagi",
       });
     }
   };
@@ -132,20 +129,19 @@ export default function LoginPage() {
 
             {/* Login Button */}
             <div className="form-control mt-6">
-              <button
-              type="submit"
-              className="btn w-full btn-primary"
-              disabled={loading}
+              <Link
+                href="#"
+                className={`btn w-full btn-primary ${loading ? 'pointer-events-none' : ''}`}
+                onClick={(e) => e.preventDefault()}
               >
-              {loading ? (
-                <div className="flex items-center justify-center">
-                <span className="loading loading-infinity loading-lg"></span>
-                <span className="ml-2">Loading...</span>
-                </div>
-              ) : (
-                "Masuk"
-              )}
-              </button>
+                {loading ? (
+                  <div className="flex items-center justify-center">
+                    <span className="loading loading-infinity loading-lg text-primary">Loading...</span>
+                  </div>
+                ) : (
+                  "Masuk"
+                )}
+              </Link>
             </div>
           </form>
           <p className="text-center text-sm mt-4">

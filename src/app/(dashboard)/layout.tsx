@@ -35,7 +35,7 @@ export default function DashboardLayout({
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
+        <span className="loading loading-infinity loading-lg text-primary">Loading...</span>
       </div>
     );
   }
@@ -72,55 +72,55 @@ export default function DashboardLayout({
   return (
     <div className="drawer lg:drawer-open">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
-      
+
       {/* Content Area */}
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
         <nav className="w-full navbar bg-base-100 shadow-lg px-4 sm:px-6">
           <div className="flex-none lg:hidden">
-        <label
-          htmlFor="dashboard-drawer"
-          className="btn btn-square btn-ghost"
-        >
-          <FaBars className="text-xl" />
-        </label>
+            <label
+              htmlFor="dashboard-drawer"
+              className="btn btn-square btn-ghost"
+            >
+              <FaBars className="text-xl" />
+            </label>
           </div>
-          
+
           <div className="flex-1">
-        <Link href="/" className="btn btn-ghost text-xl">
-          <span className="font-bold">ASTAWON</span>
-        </Link>
+            <Link href="/" className="btn btn-ghost text-xl">
+              <span className="font-bold">ASTAWON</span>
+            </Link>
           </div>
-          
+
           <div className="flex-none gap-4">
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-          <Image
-            src={user.photoURL || "/default-avatar.png"}
-            alt="User Avatar"
-            width={40}
-            height={40}
-            className="rounded-full"
-            referrerPolicy="no-referrer"
-          />
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <Image
+                    src={user.photoURL || "/default-avatar.png"}
+                    alt="User Avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link href="#" onClick={handleLogout}>
+                    Logout
+                  </Link>
+                </li>
+              </ul>
             </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-          >
-            <li>
-          <Link href="#" onClick={handleLogout}>
-            Logout
-          </Link>
-            </li>
-          </ul>
-        </div>
           </div>
         </nav>
 
@@ -132,9 +132,9 @@ export default function DashboardLayout({
         {/* Footer */}
         <footer className="footer footer-center p-6 bg-base-300 text-base-content">
           <aside>
-        <p className="font-medium">
-          © {new Date().getFullYear()} <Link href="/" className="text-primary">ASTAWON</Link> - Humas Rutan Wonosobo
-        </p>
+            <p className="font-medium">
+              © {new Date().getFullYear()} <Link href="/" className="text-primary">ASTAWON</Link> - Humas Rutan Wonosobo
+            </p>
           </aside>
         </footer>
       </div>
@@ -146,7 +146,7 @@ export default function DashboardLayout({
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        
+
         <div className="menu p-4 w-80 min-h-full bg-base-100 text-base-content shadow-lg border-r border-base-200">
           {/* User Profile Section */}
           <div className="mb-4 p-4 bg-base-200 rounded-lg">
@@ -176,11 +176,10 @@ export default function DashboardLayout({
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`flex gap-3 items-center py-3 px-4 rounded-lg transition-colors ${
-                    pathname === link.href 
-                      ? "bg-primary text-primary-content" 
+                  className={`flex gap-3 items-center py-3 px-4 rounded-lg transition-colors ${pathname === link.href
+                      ? "bg-primary text-primary-content"
                       : "hover:bg-base-200"
-                  }`}
+                    }`}
                 >
                   {link.icon}
                   <span className="font-medium">{link.name}</span>
