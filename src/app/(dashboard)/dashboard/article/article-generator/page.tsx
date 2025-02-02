@@ -5,21 +5,23 @@ import { FaArrowLeft, FaPenToSquare } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useMetadata } from "@/hooks/useMetadata";
 
-// API Configuration
-const API_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+// Helper function to handle timeout and retries
+const fetchWithTimeout = async (url: string, options: RequestInit, retries: number = 3, timeout: number = 60000) => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-const generationConfig = {
-  temperature: 2,
-  topP: 1,
-  topK: 40,
-  maxOutputTokens: 8192,
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    if (retries > 0) {
+      console.log(`Retrying... Attempts left: ${retries}`);
+      return fetchWithTimeout(url, options, retries - 1, timeout); // Retry
+    }
+    throw error;
+  }
 };
-
-interface ArticleSection {
-  title: string;
-  content: string;
-}
 
 export default function ArticleGenerator() {
   useMetadata("Article Generator", "Generate article content with AI");
@@ -28,10 +30,11 @@ export default function ArticleGenerator() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [generatedArticle, setGeneratedArticle] = useState<{
+    title: string;
     introduction: string;
-    sections: ArticleSection[];
+    mainBody: string;
+    quote: string;
     conclusion: string;
-    metaDescription: string;
   } | null>(null);
 
   const generateArticle = async () => {
@@ -41,95 +44,20 @@ export default function ArticleGenerator() {
     setError('');
 
     try {
-      if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
-        throw new Error('API key not configured');
-      }
-
-      const response = await fetch(
-        `${API_URL}?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `Anda adalah seorang jurnalis profesional yang ahli dalam menulis artikel berita ringkas dan informatif. Anda perlu membuat artikel berita yang padat, dengan struktur yang jelas dan mudah dipahami.
-  
-                     Buatkan artikel berita dengan format berikut:
-                     1. Judul: ${title}
-                     2. Intro singkat (1-2 kalimat) yang langsung menyampaikan inti berita.
-                     3. Paragraf utama yang mengandung 3-4 kalimat yang memberikan informasi lebih lanjut.
-                     4. Sertakan kutipan dari sumber terkait jika ada.
-                     5. Artikel harus ringkas, dengan fokus pada informasi yang paling penting.
-                     6. Kesimpulan yang menegaskan pesan utama dari berita.
-  
-                     Format output harus seperti berikut:
-                     HEADLINE:
-                     [Judul artikel]
-  
-                     INTRODUCTION:
-                     [Teks intro]
-  
-                     MAIN_BODY:
-                     [Paragraf utama]
-  
-                     QUOTE:
-                     [Jika ada kutipan dari sumber]
-  
-                     CONCLUSION:
-                     [Kesimpulan singkat]`,
-                  },
-                ],
-              },
-            ],
-            generationConfig,
-          }),
-        }
-      );
+      const response = await fetchWithTimeout('/api/generateArticles', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title }),
+      });
 
       if (!response.ok) {
         throw new Error('Failed to generate article');
       }
 
       const data = await response.json();
-      const text = data.candidates[0].content.parts[0].text;
-
-      // Parse the generated content
-      const sections = text.split(/\n(?=[A-Z_]+:)/);
-      const introduction =
-        sections
-          .find((s: string) => s.includes('INTRODUCTION:'))
-          ?.split('INTRODUCTION:')[1]
-          .trim() || '';
-      const mainBody =
-        sections
-          .find((s: string) => s.includes('MAIN_BODY:'))
-          ?.split('MAIN_BODY:')[1]
-          .trim() || '';
-      const quote =
-        sections
-          .find((s: string) => s.includes('QUOTE:'))
-          ?.split('QUOTE:')[1]
-          .trim() || '';
-      const conclusion =
-        sections
-          .find((s: string) => s.includes('CONCLUSION:'))
-          ?.split('CONCLUSION:')[1]
-          .trim() || '';
-
-      setGeneratedArticle({
-        introduction,
-        sections: [
-          { title: 'Main Body', content: mainBody },
-          { title: 'Quote', content: quote },
-        ],
-        conclusion,
-        metaDescription: '',
-      });
+      setGeneratedArticle(data);
     } catch (error) {
       console.error('Error generating article:', error);
       setError(
@@ -196,34 +124,28 @@ export default function ArticleGenerator() {
 
           {generatedArticle && (
             <div className='w-full mt-8'>
-              <h2 className='text-2xl font-semibold mb-4'>Generated Article</h2>
+              <h2 className='text-2xl font-semibold mb-4'>{generatedArticle.title}</h2>
 
               <div className='mb-6'>
                 <h3 className='text-xl font-medium mb-2'>Introduction</h3>
-                <p className='prose max-w-none'>
-                  {generatedArticle.introduction}
-                </p>
+                <p className='prose max-w-none'>{generatedArticle.introduction}</p>
               </div>
 
-              {generatedArticle.sections.map((section, index) => (
-                <div key={index} className='mb-6'>
-                  <h3 className='text-xl font-medium mb-2'>{section.title}</h3>
-                  <p className='prose max-w-none'>{section.content}</p>
+              <div className='mb-6'>
+                <h3 className='text-xl font-medium mb-2'>Main Body</h3>
+                <p className='prose max-w-none'>{generatedArticle.mainBody}</p>
+              </div>
+
+              {generatedArticle.quote && (
+                <div className='mb-6'>
+                  <h3 className='text-xl font-medium mb-2'>Quote</h3>
+                  <p className='prose max-w-none'>{generatedArticle.quote}</p>
                 </div>
-              ))}
+              )}
 
               <div className='mb-6'>
                 <h3 className='text-xl font-medium mb-2'>Conclusion</h3>
-                <p className='prose max-w-none'>
-                  {generatedArticle.conclusion}
-                </p>
-              </div>
-
-              <div className='mb-6'>
-                <h3 className='text-xl font-medium mb-2'>Meta Description</h3>
-                <p className='prose max-w-none'>
-                  {generatedArticle.metaDescription}
-                </p>
+                <p className='prose max-w-none'>{generatedArticle.conclusion}</p>
               </div>
 
               <div className='flex justify-end mt-4'>
@@ -232,10 +154,7 @@ export default function ArticleGenerator() {
                   className='btn btn-secondary'
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `${generatedArticle.introduction
-                      }\n\n${generatedArticle.sections
-                        .map((s) => `${s.title}\n${s.content}`)
-                        .join('\n\n')}\n\n${generatedArticle.conclusion}`
+                      `${generatedArticle.title}\n\n${generatedArticle.introduction}\n\n${generatedArticle.mainBody}\n\n${generatedArticle.quote ? `QUOTE:\n${generatedArticle.quote}\n\n` : ''}${generatedArticle.conclusion}`
                     )
                   }
                 >
