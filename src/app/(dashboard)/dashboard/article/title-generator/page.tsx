@@ -13,18 +13,17 @@ const systemPrompt = `
 Anda adalah seorang ahli SEO dan copywriter profesional yang berspesialisasi dalam membuat judul berita yang menarik dan optimal untuk SEO.
 
 Kriteria judul yang harus dipenuhi:
-- Panjang Judul: 70-100 karakter
-- Gunakan kata-kata yang kuat dan spesifik
-- Hindari penggunaan singkatan atau istilah yang tidak umum
+- Panjang judul harus (80-100 karakter)
+- Hindari penggunaan singkatan atau akronim
 - Gunakan kalimat aktif
-- Hindari kalimat tanya
-- Gunakan bahasa baku
-- Mengandung kata kunci utama
+- Hindari kalimat tanya atau kalimat negatif
+- Gunakan bahasa baku dan jelas
+- Mengandung kata kunci utama dan sinonimnya
 - Optimal untuk SEO
-- Informatif dan menarik
+- Informatif dan menarik untuk pembaca
 - Menggunakan power words
 - Membangun citra positif
-- Menarik perhatian pembaca
+- Menarik perhatian pembaca dengan judul yang unik dan menarik
 `;
 
 export default function ArticleTitleGenerator() {
@@ -49,7 +48,7 @@ export default function ArticleTitleGenerator() {
           .replace(/[_~]/g, '')
           .replace(/\s+/g, ' ')
           .replace(/\.$/, '')
-          .replace(/[^\w\s.,-]/g, '')
+          .replace(/[^\w\s.,:]/g, '')
           .trim()
       )
       .filter((title) => title.length > 5);
@@ -63,9 +62,9 @@ export default function ArticleTitleGenerator() {
       try {
         const prompt = `${systemPrompt}
   
-  Buatkan 5 judul berita yang SEO-friendly dengan deskripsi berikut: "${userInput}"
+  Buatkan 5 judul berita dengan deskripsi berikut: "${userInput}"
   
-  Format judul:
+  Format Judul:
   1. [Judul 1]
   2. [Judul 2]
   3. [Judul 3]
@@ -73,8 +72,11 @@ export default function ArticleTitleGenerator() {
   5. [Judul 5]
 
   Perhatikan hal berikut :
-  - Pastikan anda hanya menulis langsung list judul yang dibutuhkan langsung tanpa ada kalimat tambahan dari response anda.
-  - To the Point, yaitu list judul saja
+  - Panjang judul harus (minimal 80 karakter dan maksimal 100 karakter)
+  - Pastikan anda hanya menulis langsung list judul tanpa kalimat tambahan
+  - Jangan menambahkan kalimat tambahan seperti "Berikut adalah judul yang saya buatkan untuk anda" atau sejenisnya
+  - Jangan menambahkan kalimat tambahan seperti "Semoga membantu" atau sejenisnya
+  - Jangan menambahkan kalimat tambahan seperti "Silakan pilih salah satu yang anda suka" atau sejenisnya
   `;
 
         const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
@@ -134,7 +136,7 @@ export default function ArticleTitleGenerator() {
     setTitles([]);
     setAlertSuccess('');
     setAlertInfo(
-      'Sedang memproses permintaan Anda. Model AI "Gemini 2.0 Flash Thinking" sedang menghasilkan judul, ini mungkin memerlukan waktu beberapa detik...'
+      'Sedang memproses permintaan Anda. Model AI <span className="font-bold">"Gemini 2.0 Flash Thinking"</span> sedang menghasilkan judul, ini mungkin memerlukan waktu beberapa saat...'
     );
 
     const startTime = Date.now();
@@ -148,7 +150,7 @@ export default function ArticleTitleGenerator() {
       setAlertSuccess(
         `Judul berhasil dibuat dalam ${processDuration.toFixed(
           2
-        )} detik menggunakan Model AI "Gemini 2.0 Flash Thinking"`
+        )} detik menggunakan Model AI <span className="font-bold">"Gemini 2.0 Flash Thinking"</span>`
       );
     } catch (error) {
       console.error(error);
@@ -228,7 +230,7 @@ export default function ArticleTitleGenerator() {
 
         {alertInfo && (
           <div role='alert' className='alert alert-info alert-soft mt-4'>
-            <span>{alertInfo}</span>
+            <span dangerouslySetInnerHTML={{ __html: alertInfo }} />
           </div>
         )}
 
@@ -268,7 +270,7 @@ export default function ArticleTitleGenerator() {
 
         {alertSuccess && (
           <div role='alert' className='alert alert-success alert-soft mt-4'>
-            <span>{alertSuccess}</span>
+            <span dangerouslySetInnerHTML={{ __html: alertSuccess }} />
           </div>
         )}
       </div>
