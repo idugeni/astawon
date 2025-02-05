@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation';
 import { registerUser } from '@/lib/auth';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa6';
+import { FaEnvelope, FaLock, FaUser, FaEye, FaEyeSlash } from 'react-icons/fa6';
 import Swal from 'sweetalert2';
 import { useMetadata } from '@/hooks/useMetadata';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '@/lib/firebase';
 
 export default function RegisterPage() {
   useMetadata('Register', 'Register page for the admin panel');
@@ -18,9 +20,13 @@ export default function RegisterPage() {
     password: '',
   });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [createUserWithEmailAndPassword] =
+    useCreateUserWithEmailAndPassword(auth);
+
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -28,7 +34,11 @@ export default function RegisterPage() {
     }));
   };
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
+
+  const handleRegister = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const { name, email, password } = formData;
 
@@ -44,7 +54,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await registerUser(email, password);
+      await createUserWithEmailAndPassword(email, password);
       setLoading(false);
 
       Swal.fire({
@@ -56,29 +66,23 @@ export default function RegisterPage() {
       }).then(() => {
         router.push('/login');
       });
-    } catch (error: unknown) {
+    } catch (error) {
       setLoading(false);
 
-      if ((error as { code: string }).code === 'auth/email-already-in-use') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Email Sudah Terdaftar',
-          text: 'Email ini sudah digunakan. Silakan login atau gunakan email lain.',
-        });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Registrasi Gagal',
-          text: 'Terjadi kesalahan saat mendaftar. Coba lagi nanti.',
-        });
-      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Registrasi Gagal',
+        text:
+          error instanceof Error
+            ? error.message
+            : 'Terjadi kesalahan saat mendaftar. Coba lagi nanti.',
+      });
     }
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center grid-background p-8 overflow-hidden'>
-      <div className='card w-full max-w-4xl shadow-xl flex flex-col lg:flex-row transition-all overflow-auto'>
-        {/* Image Section */}
+    <div className='flex items-center justify-center grid-background p-8 overflow-hidden'>
+      <div className='card bg-base-200 w-full max-w-4xl shadow-xl flex flex-col lg:flex-row transition-all overflow-auto'>
         <div className='hidden lg:flex w-1/2 items-center justify-center p-6 md:p-8 relative'>
           <Image
             src='/background-made-paper-cuts.avif'
@@ -88,7 +92,7 @@ export default function RegisterPage() {
           />
         </div>
 
-        <div className='w-full glass p-6 sm:p-8 rounded-md lg:rounded-tr-md lg:rounded-br-md lg:rounded-none lg:w-1/2'>
+        <div className='w-full p-6 sm:p-8 rounded-md lg:rounded-tr-md lg:rounded-br-md lg:rounded-none lg:w-1/2'>
           <h2 className='text-3xl sm:text-4xl font-semibold text-center text-gradient tracking-wide uppercase mb-6'>
             Daftar
           </h2>
@@ -96,17 +100,16 @@ export default function RegisterPage() {
             Buat akun baru untuk mengakses layanan.
           </p>
           <form onSubmit={handleRegister} className='space-y-4' noValidate>
-            {/* Name Input */}
             <div className='form-control'>
               <label
                 htmlFor='name'
-                className='label mb-2 text-sm font-semibold'
+                className='label mb-2 text-sm font-semibold text-neutral-content'
               >
                 Nama Lengkap
               </label>
               <div className='flex items-center border border-neutral-300 rounded-md'>
                 <span className='pl-3 pr-2 border-r border-neutral-300'>
-                  <FaUser className='text-gray-700' />
+                  <FaUser className='text-neutral-content' />
                 </span>
                 <input
                   type='text'
@@ -118,25 +121,20 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   autoComplete='off'
-                  aria-describedby='name-helper-text'
                 />
               </div>
-              <p id='name-helper-text' className='text-xs italic mt-1'>
-                Masukkan nama lengkap Anda.
-              </p>
             </div>
 
-            {/* Email Input */}
             <div className='form-control'>
               <label
                 htmlFor='email'
-                className='label mb-2 text-sm font-semibold'
+                className='label mb-2 text-sm font-semibold text-neutral-content'
               >
                 Email
               </label>
               <div className='flex items-center border border-neutral-300 rounded-md'>
                 <span className='pl-3 pr-2 border-r border-neutral-300'>
-                  <FaEnvelope className='text-gray-700' />
+                  <FaEnvelope className='text-neutral-content' />
                 </span>
                 <input
                   type='email'
@@ -148,45 +146,46 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   autoComplete='off'
-                  aria-describedby='email-helper-text'
                 />
               </div>
-              <p id='email-helper-text' className='text-xs italic mt-1'>
-                Masukkan email yang valid untuk melanjutkan.
-              </p>
             </div>
 
-            {/* Password Input */}
             <div className='form-control'>
               <label
                 htmlFor='password'
-                className='label mb-2 text-sm font-semibold'
+                className='label mb-2 text-sm font-semibold text-neutral-content'
               >
                 Password
               </label>
-              <div className='flex items-center border border-neutral-300 rounded-md'>
+              <div className='flex items-center border border-neutral-300 rounded-md relative'>
                 <span className='pl-3 pr-2 border-r border-neutral-300'>
-                  <FaLock className='text-gray-700' />
+                  <FaLock className='text-neutral-content' />
                 </span>
                 <input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   id='password'
                   name='password'
-                  className='input bg-transparent border-none focus:outline-none w-full pl-3 focus:shadow-none'
+                  className='input bg-transparent border-none focus:outline-none w-full pl-3 pr-10'
                   placeholder='********'
                   value={formData.password}
                   onChange={handleChange}
                   required
                   autoComplete='new-password'
-                  aria-describedby='password-helper-text'
                 />
+                <button
+                  type='button'
+                  className='absolute right-3 text-neutral-content'
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? (
+                    <FaEyeSlash className='text-neutral-content' />
+                  ) : (
+                    <FaEye className='text-neutral-content' />
+                  )}
+                </button>
               </div>
-              <p id='password-helper-text' className='text-xs italic mt-1'>
-                Password harus terdiri dari minimal 8 karakter.
-              </p>
             </div>
 
-            {/* Register Button */}
             <div className='form-control mt-6'>
               <button
                 type='submit'
@@ -195,14 +194,7 @@ export default function RegisterPage() {
                 }`}
                 disabled={loading}
               >
-                {loading ? (
-                  <div className='flex items-center justify-center'>
-                    <span className='loading loading-infinity loading-lg text-primary'></span>
-                    <span className='ml-2'>Loading...</span>
-                  </div>
-                ) : (
-                  'Daftar'
-                )}
+                {loading ? 'Loading...' : 'Daftar'}
               </button>
             </div>
           </form>
