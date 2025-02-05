@@ -1,164 +1,134 @@
 'use client';
-
 import { useState } from 'react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useMetadata } from '@/hooks/useMetadata';
 
-const API_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
-
-const generationConfig = {
-  temperature: 2,
-  topP: 1,
-  topK: 40,
-  maxOutputTokens: 8192,
-  responseMimeType: 'text/plain',
-};
-
 export default function ArticleTitleGenerator() {
-  useMetadata('Title Generator', 'Generate SEO-optimized article titles with AI');
+  useMetadata(
+    'Pembuat Judul',
+    'Dapatkan judul artikel yang menarik dengan AI'
+  );
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [titles, setTitles] = useState<string[]>([]);
   const [showToast, setShowToast] = useState(false);
+  const [alertInfo, setAlertInfo] = useState('');
+  const [alertSuccess, setAlertSuccess] = useState('');
 
   const generateTitles = async () => {
-    if (!input) return;
-
+    if (!input.trim()) return;
     setLoading(true);
+    setTitles([]);
+    setAlertSuccess('');
+    setAlertInfo(
+      'Sedang memproses permintaan Anda. Model AI "Gemini 2.0 Flash Thinking" sedang menghasilkan judul, ini mungkin memerlukan waktu beberapa detik...'
+    );
+
+    const startTime = Date.now();
 
     try {
-      if (!process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
-        throw new Error('API key not configured');
-      }
+      const response = await fetch('/api/generateTitles', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userInput: input }),
+      });
 
-      const response = await fetch(
-        `${API_URL}?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `Anda adalah seorang ahli SEO dan copywriter profesional yang berspesialisasi dalam membuat judul artikel berita yang menarik dan optimal untuk SEO. 
-                          Tugas Anda adalah menghasilkan judul artikel dalam Bahasa Indonesia dengan kriteria berikut:
-                          - Gunakan kata-kata yang kuat dan spesifik
-                          - Hindari penggunaan singkatan atau istilah yang tidak umum
-                          - Gunakan kalimat aktif
-                          - Hindari kalimat tanya
-                          - Gunakan bahasa baku
-                          - Netral dan tidak didramatisasi
-                          - Mengandung kata kunci utama
-                          - Optimal untuk SEO
-                          - Informatif
-                          - Menggunakan power words
-                          - Membangun citra positif
-                          - Menarik perhatian pembaca
-
-                          Buatkan 5 judul artikel SEO-friendly berdasarkan input berikut: ${input}
-
-                          Format output:
-                          1. [Judul 1]
-                          2. [Judul 2]
-                          3. [Judul 3]
-                          4. [Judul 4]
-                          5. [Judul 5]`,
-                  },
-                ],
-              },
-            ],
-            generationConfig,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to generate titles');
-      }
+      if (!response.ok) throw new Error('Failed to generate titles');
 
       const data = await response.json();
-      const text = data.candidates[0].content.parts[0].text;
+      setTitles(data.titles);
+      setAlertInfo('');
 
-      const titlesList = text
-        .split('\n')
-        .filter((line: string) => line.match(/^\d\./))
-        .map((line: string) =>
-          line
-            .replace(/\*\*/g, '')
-            .replace(/^\d\.\s/, '')
-            .trim()
-        );
-
-      setTitles(titlesList);
+      const processDuration = (Date.now() - startTime) / 1000;
+      setAlertSuccess(
+        `Judul berhasil dibuat dalam ${processDuration.toFixed(
+          2
+        )} detik menggunakan Model AI "Gemini 2.0 Flash Thinking"`
+      );
     } catch (error) {
-      console.error('Error generating titles:', error);
-    } finally {
-      setLoading(false);
+      console.error(error);
+      setAlertInfo(
+        'Terjadi kesalahan dalam proses pembuatan judul. Silakan coba lagi nanti.'
+      );
+    }
+
+    setLoading(false);
+  };
+
+  // Fungsi untuk menangani tekan Enter di textarea
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      generateTitles();
     }
   };
 
   return (
-    <div className='min-h-screen w-full flex flex-col items-center p-8'>
-      {/* Container untuk Back Button */}
+    <div className='min-h-screen w-full flex flex-col items-center'>
       <div className='w-full flex justify-between mb-4'>
-        <Link href='/dashboard/article' className='btn btn-ghost gap-2 flex items-center'>
+        <Link
+          href='/dashboard/article'
+          className='btn btn-neutral gap-2 flex items-center'
+        >
           <FaArrowLeft /> Kembali
         </Link>
-        <Link href='/dashboard/next-page' className='btn btn-ghost gap-2 flex items-center'>
-          Lanjut <FaArrowRight />
+        <Link
+          href='/dashboard/article/article-generator'
+          className='btn btn-neutral gap-2 flex items-center'
+        >
+          Buat Berita <FaArrowRight />
         </Link>
       </div>
 
-      {/* Card Container */}
-      <div className='w-full max-w-4xl bg-base-100 shadow-xl p-6 rounded-lg'>
-        {/* Container untuk Judul */}
-        <div className='w-full mb-4'>
-          <h1 className='text-4xl font-bold text-center'>Title Generator</h1>
-        </div>
+      <div className='w-full mb-8'>
+        <h1 className='text-4xl font-bold text-center'>Pembuat Judul</h1>
+      </div>
 
-        {/* Container untuk Input Section */}
+      <div className='w-full bg-base-100 shadow-xl p-6 rounded-lg'>
         <div className='w-full mb-4'>
           <fieldset className='fieldset'>
-            <legend className='fieldset-legend'>Input Description</legend>
+            <legend className='fieldset-legend'>Masukan Deskripsi</legend>
             <textarea
-              className='textarea glass min-h-36 w-full resize-none border-none focus:outline-none focus:border-none shadow-md'
-              placeholder='Enter a description that includes keyword and topic'
+              className='textarea min-h-36 w-full resize-none border-2 border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary transition-all duration-300 hover:border-primary focus:outline-none'
+              placeholder='Masukkan deskripsi yang mencakup kata kunci dan topik. Contoh : "Bimbingan Kerohanian di Rutan Wonosobo"'
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
               disabled={loading}
             />
             <div className='fieldset-label text-xs text-base-content'>
-              Describe the content you need to create a title for
+              Jelaskan konten yang Anda perlukan untuk membuat judul
             </div>
           </fieldset>
         </div>
 
-        {/* Container untuk Tombol Generate */}
         <div className='w-full mb-4'>
-          <Link
-            href="#"
-            className='btn btn-primary btn-soft w-full transition-all duration-300'
+          <button
+            className='btn btn-primary w-full transition-all duration-300'
             onClick={generateTitles}
+            disabled={loading}
           >
             {loading ? (
-              <>
-                <span className='loading loading-spinner'></span>Sedang membuat judul...
-              </>
+              <div className='flex items-center justify-center'>
+                <span className='loading loading-infinity loading-lg text-primary'></span>
+                <span className='ml-2'>Sedang membuat judul...</span>
+              </div>
             ) : titles.length > 0 ? (
-              'Generate Again'
+              'Hasilkan Lagi'
             ) : (
-              'Generate'
+              'Buat Judul'
             )}
-          </Link>
+          </button>
         </div>
 
-        {/* Container untuk Tabel Judul */}
+        {alertInfo && (
+          <div role='alert' className='alert alert-info alert-soft mt-4'>
+            <span>{alertInfo}</span>
+          </div>
+        )}
+
         {titles.length > 0 && (
           <div className='w-full mt-8'>
             <table className='table w-full'>
@@ -175,18 +145,16 @@ export default function ArticleTitleGenerator() {
                     <td>{index + 1}</td>
                     <td>{title}</td>
                     <td>
-                      <Link
-                        href='#'
-                        className='btn btn-sm btn-secondary btn-soft rounded-sm'
-                        onClick={(e) => {
-                          e.preventDefault();
+                      <button
+                        className='btn btn-sm btn-secondary rounded-sm'
+                        onClick={() => {
                           navigator.clipboard.writeText(title);
                           setShowToast(true);
                           setTimeout(() => setShowToast(false), 3000);
                         }}
                       >
                         Salin
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -194,8 +162,14 @@ export default function ArticleTitleGenerator() {
             </table>
           </div>
         )}
+
+        {alertSuccess && (
+          <div role='alert' className='alert alert-success alert-soft mt-4'>
+            <span>{alertSuccess}</span>
+          </div>
+        )}
       </div>
-      {/* Toast Notification */}
+
       {showToast && (
         <div className='toast toast-top toast-end'>
           <div className='alert alert-success'>

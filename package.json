@@ -1,6 +1,24 @@
 {
   "name": "astawon",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1",
+  "description": "A Next.js project integrated with Firebase and generative AI features, built with modern UI components and TailwindCSS.",
+  "keywords": [
+    "nextjs",
+    "firebase",
+    "tailwindcss",
+    "generative-ai",
+    "react"
+  ],
+  "author": "Eliyanto Sarage",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idugeni/astawon"
+  },
+  "bugs": {
+    "url": "https://github.com/idugeni/astawon/issues"
+  },
+  "homepage": "https://astawon.vercel.app/",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --experimental-https",
@@ -14,6 +32,7 @@
     "@firebase/auth": "^1.8.2",
     "@google/generative-ai": "^0.21.0",
     "@vercel/og": "^0.6.5",
+    "dompurify": "^3.2.4",
     "firebase": "^11.2.0",
     "next": "15.1.6",
     "react": "^19.0.0",
@@ -22,6 +41,8 @@
     "react-hot-toast": "^2.5.1",
     "react-icons": "^5.4.0",
     "recharts": "^2.15.1",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "sweetalert2": "^11.15.10"
   },
   "devDependencies": {
@@ -34,6 +55,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
+    "readme-md-generator": "^1.0.0",
     "tailwindcss": "^4.0.3",
     "turbo": "^2.4.0",
     "typescript": "^5"

@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Astawon
 
-## Getting Started
+**Version:** 0.1.0-alpha.1
 
-First, run the development server:
+**Author:** Eliyanto Sarage
+
+**License:** MIT
+
+## Badges
+
+[![Build Status](https://img.shields.io/github/workflow/status/idugeni/astawon/CI?style=for-the-badge)](https://github.com/idugeni/astawon/actions) [![Version](https://img.shields.io/npm/v/astawon?style=for-the-badge)](https://www.npmjs.com/package/astawon) [![License](https://img.shields.io/github/license/idugeni/astawon?style=for-the-badge)](https://github.com/idugeni/astawon/blob/main/LICENSE)
+
+## About
+
+Astawon is a Next.js project integrated with Firebase and generative AI features, built with modern UI components and TailwindCSS. It's designed to deliver a seamless and efficient user experience with the latest web technologies.
+
+## Features
+
+*   Next.js framework with modern features like Turbopack
+*   Firebase integration for authentication and database
+*   Generative AI functionality for dynamic content generation
+*   TailwindCSS for responsive and customizable UI components
+
+## Installation
+
+To get started with the project, clone the repository and install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://githubidugeni/astawon.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+cd astawon
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+```        
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+*   **dev:** Start the development server with Turbopack:
+```bash
+npm run dev
+```
+    
+*   **build:** Build the project for production:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
+    
+*   **start:** Start the production server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run start
+```
+    
+*   **lint:** Run the linting tool:
+```bash
+npm run lint
+```
+    
+*   **check-types:** Check the types with TypeScript:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run check-types
+```
+    
 
-## Deploy on Vercel
+## Dependencies
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The project uses the following dependencies:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   @firebase/app, @firebase/auth, firebase - Firebase authentication and app management
+*   @google/generative-ai - Google Generative AI services
+*   next, react, react-dom - Core Next.js and React libraries
+*   tailwindcss, daisyui - UI styling with TailwindCSS
+*   typescript - TypeScript support
+*   recharts, remark, sweetalert2 - Data visualization, markdown rendering, and alerts
+
+## Contributing
+
+We welcome contributions to the project! If you'd like to help, please follow these steps:
+
+*   Fork the repository
+*   Create a new branch (`git checkout -b feature-xyz`)
+*   Commit your changes (`git commit -am 'Add new feature'`)
+*   Push to the branch (`git push origin feature-xyz`)
+*   Create a new Pull Request
+
+## Links
+
+**Repository:** [https://github.com/idugeni/astawon](https://github.com/idugeni/astawon)
+
+**Live Demo:** [https://astawon.vercel.app/](https://astawon.vercel.app/)
+
+**Issues:** [https://github.com/idugeni/astawon/issues](https://github.com/idugeni/astawon/issues)
+
+© 2025 Eliyanto Sarage

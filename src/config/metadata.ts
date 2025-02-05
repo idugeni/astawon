@@ -1,11 +1,12 @@
 // src/config/metadata.ts
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 export const siteConfig = {
-  name: "ASTAWON",
+  name: 'ASTAWON',
   description:
-    "ASTAWON adalah platform digital yang dirancang untuk mempermudah pengelolaan informasi dan penyampaian perkembangan terkini tentang Rutan Wonosobo.",
-  url: "https://astawon.vercel.app",
+    'ASTAWON adalah platform digital yang dirancang untuk mempermudah pengelolaan informasi dan penyampaian perkembangan terkini tentang Rutan Wonosobo.',
+  url: 'https://astawon.vercel.app',
+  shortUrl: 'astawon.vercel.app',
 };
 
 export const defaultMetadata: Metadata = {
@@ -15,4 +16,20 @@ export const defaultMetadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+  openGraph: {
+    type: 'website',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    locale: 'id_ID',
+    url: siteConfig.url,
+    images: [
+      {
+        url: `https://${siteConfig.shortUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
 };

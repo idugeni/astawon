@@ -17,7 +17,7 @@ const fetchWithTimeout = async (url: string, options: RequestInit, retries: numb
   } catch (error) {
     if (retries > 0) {
       console.log(`Retrying... Attempts left: ${retries}`);
-      return fetchWithTimeout(url, options, retries - 1, timeout); // Retry
+      return fetchWithTimeout(url, options, retries - 1, timeout);
     }
     throw error;
   }
