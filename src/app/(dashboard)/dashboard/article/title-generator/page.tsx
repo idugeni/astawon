@@ -4,11 +4,31 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useMetadata } from '@/hooks/useMetadata';
 
+// Konfigurasi API
+const API_ENDPOINT =
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-thinking-exp-01-21:generateContent';
+const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+const systemPrompt = `
+Anda adalah seorang ahli SEO dan copywriter profesional yang berspesialisasi dalam membuat judul berita yang menarik dan optimal untuk SEO.
+
+Kriteria judul yang harus dipenuhi:
+- Panjang Judul: 70-100 karakter
+- Gunakan kata-kata yang kuat dan spesifik
+- Hindari penggunaan singkatan atau istilah yang tidak umum
+- Gunakan kalimat aktif
+- Hindari kalimat tanya
+- Gunakan bahasa baku
+- Mengandung kata kunci utama
+- Optimal untuk SEO
+- Informatif dan menarik
+- Menggunakan power words
+- Membangun citra positif
+- Menarik perhatian pembaca
+`;
+
 export default function ArticleTitleGenerator() {
-  useMetadata(
-    'Pembuat Judul',
-    'Dapatkan judul artikel yang menarik dengan AI'
-  );
+  useMetadata('Pembuat Judul', 'Dapatkan judul artikel yang menarik dengan AI');
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,6 +36,97 @@ export default function ArticleTitleGenerator() {
   const [showToast, setShowToast] = useState(false);
   const [alertInfo, setAlertInfo] = useState('');
   const [alertSuccess, setAlertSuccess] = useState('');
+
+  const processTitlesResponse = (responseText: string) => {
+    return responseText
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => /^\d+\./.test(line))
+      .map((line) =>
+        line
+          .replace(/^\d+\.\s*/, '')
+          .replace(/\*\*(.*?)\*\*/g, '$1')
+          .replace(/[_~]/g, '')
+          .replace(/\s+/g, ' ')
+          .replace(/\.$/, '')
+          .replace(/[^\w\s.,-]/g, '')
+          .trim()
+      )
+      .filter((title) => title.length > 5);
+  };
+
+  const generateTitlesWithRetry = async (
+    userInput: string,
+    maxAttempts = 3
+  ): Promise<string[]> => {
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        const prompt = `${systemPrompt}
+  
+  Buatkan 5 judul berita yang SEO-friendly dengan deskripsi berikut: "${userInput}"
+  
+  Format judul:
+  1. [Judul 1]
+  2. [Judul 2]
+  3. [Judul 3]
+  4. [Judul 4]
+  5. [Judul 5]
+
+  Perhatikan hal berikut :
+  - Pastikan anda hanya menulis langsung list judul yang dibutuhkan langsung tanpa ada kalimat tambahan dari response anda.
+  - To the Point, yaitu list judul saja
+  `;
+
+        const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: prompt }],
+              },
+            ],
+            generationConfig: {
+              temperature: 2,
+              topP: 1,
+              topK: 64,
+              maxOutputTokens: 8192,
+              stopSequences: ['6.'],
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate content');
+        }
+
+        const result = await response.json();
+        const responseText = result.candidates[0].content.parts[0].text;
+
+        if (!responseText) {
+          throw new Error('Model tidak mengembalikan respons.');
+        }
+
+        const processedTitles = processTitlesResponse(responseText);
+        if (processedTitles.length === 5) {
+          return processedTitles;
+        }
+
+        throw new Error('Invalid number of titles generated');
+      } catch (error) {
+        if (attempt === maxAttempts) {
+          throw error;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+    }
+
+    // Fallback return jika semua percobaan gagal
+    throw new Error('Failed after all retry attempts');
+  };
 
   const generateTitles = async () => {
     if (!input.trim()) return;
@@ -29,16 +140,8 @@ export default function ArticleTitleGenerator() {
     const startTime = Date.now();
 
     try {
-      const response = await fetch('/api/generateTitles', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userInput: input }),
-      });
-
-      if (!response.ok) throw new Error('Failed to generate titles');
-
-      const data = await response.json();
-      setTitles(data.titles);
+      const generatedTitles = await generateTitlesWithRetry(input);
+      setTitles(generatedTitles);
       setAlertInfo('');
 
       const processDuration = (Date.now() - startTime) / 1000;
@@ -57,7 +160,6 @@ export default function ArticleTitleGenerator() {
     setLoading(false);
   };
 
-  // Fungsi untuk menangani tekan Enter di textarea
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -67,6 +169,7 @@ export default function ArticleTitleGenerator() {
 
   return (
     <div className='min-h-screen w-full flex flex-col items-center'>
+      {/* Rest of the JSX remains exactly the same */}
       <div className='w-full flex justify-between mb-4'>
         <Link
           href='/dashboard/article'

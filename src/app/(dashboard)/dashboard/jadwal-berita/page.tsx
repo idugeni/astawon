@@ -12,8 +12,8 @@ export const generateMetadata = (): Metadata => {
 
 export default function JadwalBerita() {
   const jadwalHarian = [
-    { hari: 'Senin', petugas: 'Fatikha' },
-    { hari: 'Selasa', petugas: 'Fatikha' },
+    { hari: 'Senin', petugas: 'Mugiwara' },
+    { hari: 'Selasa', petugas: 'Mugiwara' },
     { hari: 'Rabu', petugas: 'Setyarifqi' },
     { hari: 'Kamis', petugas: 'Setyarifqi' },
     { hari: 'Jumat', petugas: 'Ibnu Abd' },
