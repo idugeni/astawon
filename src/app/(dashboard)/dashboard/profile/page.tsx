@@ -48,8 +48,8 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className='text-center p-8'>
-        <div className='alert alert-error max-w-md mx-auto'>
+      <div className='flex justify-center items-center h-screen'>
+        <div className='alert alert-error max-w-md mx-auto p-8'>
           Unauthorized! Please login to view this page.
         </div>
       </div>
@@ -57,7 +57,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className='space-y-8 p-6 flex justify-center flex-col items-center'>
+    <div className='space-y-8 flex justify-center flex-col items-center'>
       {/* Profile Header */}
       <div className='card bg-gradient-to-r from-primary to-secondary shadow-2xl p-8 rounded-2xl text-center text-white max-w-lg w-full mb-8'>
         <div className='flex flex-col items-center space-y-4'>

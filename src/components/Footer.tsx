@@ -100,12 +100,12 @@ export default function Footer() {
         <div className='divider my-8' />
 
         {/* Copyright */}
-        <div className='flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-base-content/70'>
-          <p>
+        <div className='flex flex-col md:flex-row justify-center md:justify-between items-center gap-4 text-sm text-base-content/70'>
+          <p className='text-center'>
             © {currentYear} ASTAWON - Humas Rutan Wonosobo. Hak Cipta
             Dilindungi.
           </p>
-          <div className='flex gap-4'>
+          <div className='flex gap-4 text-center'>
             <Link href='/privacy' className='link link-hover'>
               Kebijakan Privasi
             </Link>

@@ -201,22 +201,21 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className='min-h-screen bg-base-200/50 py-12 px-4 sm:px-6 lg:px-8'>
+    <div className='bg-base-200/50'>
+      <div className='text-center space-y-3 mb-8'>
+        <h2 className='text-4xl font-bold text-base-content'>
+          Account Settings
+        </h2>
+        <p className='text-base-content/60 text-lg'>
+          Manage your account preferences
+        </p>
+      </div>
       <div
         className='max-w-3xl mx-auto bg-base-100 rounded-2xl shadow-xl p-8 space-y-8
                     backdrop-blur-xl backdrop-saturate-150
                     transition-all duration-500 hover:shadow-2xl
                     border border-base-300'
       >
-        <div className='text-center space-y-3'>
-          <h2 className='text-4xl font-bold text-base-content'>
-            Account Settings
-          </h2>
-          <p className='text-base-content/60 text-lg'>
-            Manage your account preferences
-          </p>
-        </div>
-
         <div
           role='tablist'
           className='tabs tabs-box justify-between bg-base-200 p-1 rounded-box w-full'

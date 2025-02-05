@@ -51,7 +51,7 @@ const deviceData = [
 export default function AnalyticsPage() {
   useMetadata('Analytics', 'Analytics page for the admin panel');
   return (
-    <div className='space-y-6 p-4'>
+    <div className='space-y-6'>
       {/* Quick Stats */}
       <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
         <div className='stats shadow bg-base-100 hover:bg-base-200 transition-colors'>
