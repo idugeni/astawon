@@ -1,25 +1,52 @@
 # Astawon
 
-**Version:** 0.1.0-alpha.1
+**Astawon** is a **Next.js** project integrated with **Firebase** and **generative AI** features. It is built using the latest web technologies to deliver a **seamless** and **efficient** user experience. **Next.js**, as a popular **React** framework, enables fast and structured development of applications. The integration with **Firebase** provides a simple yet powerful backend solution, especially for managing **data storage**, **user authentication**, and other **cloud-based services**.
 
-**Author:** Eliyanto Sarage
+The **generative AI** features embedded in **Astawon** offer incredible capabilities to make the user experience more **interactive** and **personalized**. By leveraging advanced AI technology, the application can generate **content** or even **recommendations** tailored to the user's preferences and needs, enhancing **engagement** and **appeal**. This feature opens new possibilities in application development, not relying solely on static data but also adapting and learning from user behavior.
 
-**License:** MIT
+**Astawon** is also designed using modern UI components and **TailwindCSS**, a popular CSS framework known for its ability to create **responsive** and **aesthetic** user interfaces. **TailwindCSS** allows developers to customize designs with high flexibility, ensuring that the app not only looks beautiful but is also **intuitive** and adaptable across different devices and screen sizes.
+
+Overall, **Astawon** is a project built to leverage the latest web technologies to provide a smooth, efficient, and interactive user experience. With the integration of **Next.js**, **Firebase**, and **generative AI**, along with modern design powered by **TailwindCSS**, this project aims to create a **scalable**, **interactive**, and **user-friendly** web application.
 
 ## Badges
 
-[![Build Status](https://img.shields.io/github/workflow/status/idugeni/astawon/CI?style=for-the-badge)](https://github.com/idugeni/astawon/actions) [![Version](https://img.shields.io/npm/v/astawon?style=for-the-badge)](https://www.npmjs.com/package/astawon) [![License](https://img.shields.io/github/license/idugeni/astawon?style=for-the-badge)](https://github.com/idugeni/astawon/blob/main/LICENSE)
+| Version | Status | License |
+|---------|--------|---------|
+| ![Version](https://img.shields.io/badge/version-0.1.0--alpha.1-%23ff5733) | ![Status](https://img.shields.io/badge/status-alpha-orange) | ![License](https://img.shields.io/github/license/idugeni/astawon) |
 
-## About
+| Author | Repo Size | Code Size |
+|--------|----------|----------|
+| ![Author](https://img.shields.io/badge/Author-Eliyanto_Sarage-blue) | ![Repo Size](https://img.shields.io/github/repo-size/idugeni/astawon) | ![Code Size](https://img.shields.io/github/languages/code-size/idugeni/astawon) |
 
-Astawon is a Next.js project integrated with Firebase and generative AI features, built with modern UI components and TailwindCSS. It's designed to deliver a seamless and efficient user experience with the latest web technologies.
+| Open Issues | Open PRs |
+|------------|---------|
+| ![Open Issues](https://img.shields.io/github/issues/idugeni/astawon) | ![Open PRs](https://img.shields.io/github/issues-pr/idugeni/astawon) |
 
-## Features
+| Last Commit | Build Status |
+|------------|-------------|
+| ![Last Commit](https://img.shields.io/github/last-commit/idugeni/astawon) | ![Build Status](https://img.shields.io/github/actions/workflow/status/idugeni/astawon/ci.yml) |
 
-*   Next.js framework with modern features like Turbopack
-*   Firebase integration for authentication and database
-*   Generative AI functionality for dynamic content generation
-*   TailwindCSS for responsive and customizable UI components
+| Made with | Platform |
+|----------|---------|
+| ![Made with](https://img.shields.io/badge/Made%20with-JavaScript-yellow) | ![Platform](https://img.shields.io/badge/Platform-Web-lightgrey) |
+
+| Contributors | Forks |
+|-------------|------|
+| ![Contributors](https://img.shields.io/github/contributors/idugeni/astawon) | ![Forks](https://img.shields.io/github/forks/idugeni/astawon?style=social) |
+
+## Features  
+
+The project includes the following features:  
+
+| Feature | Description |
+|------------|------------|
+| ![Next.js](https://img.shields.io/badge/Next.js-000?logo=next.js) | Modern Next.js framework with **Turbopack** for fast builds. |
+| ![Firebase](https://img.shields.io/badge/Firebase-ffca28?logo=firebase) | Firebase integration for authentication and database. |
+| ![AI](https://img.shields.io/badge/Generative%20AI-blue?logo=google) | Generative AI functionality for dynamic content generation. |
+| ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38b2ac?logo=tailwindcss) | TailwindCSS for responsive and customizable UI components. |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-007acc?logo=typescript) | TypeScript support for safer and scalable development. |
+| ![Recharts](https://img.shields.io/badge/Recharts-0088cc?logo=data:image/svg+xml;base64,...) | Recharts for dynamic data visualization. |
+| ![SweetAlert2](https://img.shields.io/badge/SweetAlert2-ff5f6d?logo=sweetalert) | SweetAlert2 for modern and stylish alerts. |
 
 ## Installation
 
@@ -35,66 +62,93 @@ cd astawon
 
 ```bash
 npm install
-```        
+```
 
 ## Scripts
 
-*   **dev:** Start the development server with Turbopack:
-```bash
-npm run dev
-```
-    
-*   **build:** Build the project for production:
+- **dev:** Start the development server with Turbopack:
 
-```bash
-npm run build
-```
-    
-*   **start:** Start the production server:
+    ```bash
+    npm run dev
+    ```
 
-```bash
-npm run start
-```
-    
-*   **lint:** Run the linting tool:
-```bash
-npm run lint
-```
-    
-*   **check-types:** Check the types with TypeScript:
+- **build:** Build the project for production:
 
-```bash
-npm run check-types
-```
-    
+    ```bash
+    npm run build
+    ```
+
+- **start:** Start the production server:
+
+    ```bash
+    npm run start
+    ```
+
+- **lint:** Run the linting tool:
+
+    ```bash
+    npm run lint
+    ```
+
+- **check-types:** Check the types with TypeScript:
+
+    ```bash
+    npm run check-types
+    ```
 
 ## Dependencies
 
 The project uses the following dependencies:
 
-*   @firebase/app, @firebase/auth, firebase - Firebase authentication and app management
-*   @google/generative-ai - Google Generative AI services
-*   next, react, react-dom - Core Next.js and React libraries
-*   tailwindcss, daisyui - UI styling with TailwindCSS
-*   typescript - TypeScript support
-*   recharts, remark, sweetalert2 - Data visualization, markdown rendering, and alerts
+| Dependency | Description |
+|------------|------------|
+| ![Firebase](https://img.shields.io/badge/@firebase/app-orange) <br> ![Auth](https://img.shields.io/badge/@firebase/auth-orange) <br> ![Firebase](https://img.shields.io/badge/firebase-orange) | Firebase authentication and app management |
+| ![Google Generative AI](https://img.shields.io/badge/@google/generative--ai-blue) | Google Generative AI services |
+| ![Next.js](https://img.shields.io/badge/next.js-black) <br> ![React](https://img.shields.io/badge/react-blue) <br> ![ReactDOM](https://img.shields.io/badge/react--dom-blue) | Core Next.js and React libraries |
+| ![TailwindCSS](https://img.shields.io/badge/tailwindcss-teal) <br> ![DaisyUI](https://img.shields.io/badge/daisyui-purple) | UI styling with TailwindCSS |
+| ![TypeScript](https://img.shields.io/badge/typescript-blue) | TypeScript support |
+| ![Recharts](https://img.shields.io/badge/recharts-green) <br> ![Remark](https://img.shields.io/badge/remark-grey) <br> ![SweetAlert2](https://img.shields.io/badge/sweetalert2-pink) | Data visualization, markdown rendering, and alerts |
 
-## Contributing
+## Contributing  
 
-We welcome contributions to the project! If you'd like to help, please follow these steps:
+We **welcome contributions** to the project! If you'd like to help, please follow these steps:  
 
-*   Fork the repository
-*   Create a new branch (`git checkout -b feature-xyz`)
-*   Commit your changes (`git commit -am 'Add new feature'`)
-*   Push to the branch (`git push origin feature-xyz`)
-*   Create a new Pull Request
+### 🛠️ Steps to Contribute  
 
-## Links
+1. **Fork the repository** → Click the `Fork` button at the top right of this repo.  
+2. **Create a new branch** → Run:  
+   ```sh
+   git checkout -b feature-xyz
+   ```
+3. **Make changes & commit** → After making your changes, commit them with:  
+   ```sh
+   git commit -am "Add new feature"
+   ```
+4. **Push your branch** → Upload your changes with:  
+   ```sh
+   git push origin feature-xyz
+   ```
+5. **Create a Pull Request** → Go to the repository on GitHub and submit a new **Pull Request (PR)**.  
 
-**Repository:** [https://github.com/idugeni/astawon](https://github.com/idugeni/astawon)
+### Contribution Guidelines  
 
-**Live Demo:** [https://astawon.vercel.app/](https://astawon.vercel.app/)
+| Guideline | Details |
+|-------------|----------|
+| **Code Style** | Follow best practices and clean code principles. |
+| **Commit Messages** | Use clear, concise messages (e.g., `feat: add login page`). |
+| **PR Description** | Provide a summary of changes and link related issues. |
+| **Testing** | Ensure your code runs smoothly before submitting. |
 
-**Issues:** [https://github.com/idugeni/astawon/issues](https://github.com/idugeni/astawon/issues)
+### Thank You for Your Contribution!  
 
-© 2025 Eliyanto Sarage
+Every contribution makes this project better! Feel free to ask questions or discuss ideas in **issues** or **pull requests**. 🚀💖  
+
+## **Links**
+
+- **Repository:** [Visit the repository](https://github.com/idugeni/astawon)
+
+- **Live Demo:** [Explore the live demo](https://astawon.vercel.app/)
+
+- **Issues:** [Report an issue](https://github.com/idugeni/astawon/issues)
+
+© 2025 **Eliyanto Sarage**
