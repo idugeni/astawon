@@ -67,7 +67,7 @@ export default function DashboardLayout({
   if (loading) {
     return (
       <div className='flex justify-center items-center min-h-screen'>
-        <span className='loading loading-infinity loading-lg text-primary'>
+        <span className='loading loading-spinner'>
           Loading...
         </span>
       </div>

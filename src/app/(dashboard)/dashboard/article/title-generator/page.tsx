@@ -6,24 +6,45 @@ import { useMetadata } from '@/hooks/useMetadata';
 
 // Konfigurasi API
 const API_ENDPOINT =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-thinking-exp-01-21:generateContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent';
 const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
-const systemPrompt = `
+const systemInstruction = `
 Anda adalah seorang ahli SEO dan copywriter profesional yang berspesialisasi dalam membuat judul berita yang menarik dan optimal untuk SEO.
 
-Kriteria judul yang harus dipenuhi:
-- Panjang judul harus (80-100 karakter)
-- Hindari penggunaan singkatan atau akronim
-- Gunakan kalimat aktif
-- Hindari kalimat tanya atau kalimat negatif
-- Gunakan bahasa baku dan jelas
-- Mengandung kata kunci utama dan sinonimnya
-- Optimal untuk SEO
-- Informatif dan menarik untuk pembaca
-- Menggunakan power words
-- Membangun citra positif
-- Menarik perhatian pembaca dengan judul yang unik dan menarik
+⚠️ PENTING: Panjang judul **HARUS** antara **80-120 karakter**.
+- **Judul tidak boleh kurang dari 80 karakter.**
+- **Judul tidak boleh lebih dari 120 karakter.**
+- Jika perlu, lakukan penyesuaian kata agar tetap dalam rentang ini tanpa mengubah makna.
+
+### Kriteria Judul yang Harus Dipenuhi:
+1. **Panjang Judul**:
+   - **Minimal 80 karakter, maksimal 120 karakter (Wajib).**
+   - Pastikan jumlah karakter sesuai sebelum menyajikan hasil.
+2. **Struktur Bahasa**:
+   - Gunakan **kalimat aktif**.
+   - **Hindari singkatan atau akronim yang tidak umum.**
+   - **Hindari kalimat tanya atau kalimat negatif.**
+   - Gunakan **bahasa baku dan jelas**.
+3. **Optimasi SEO**:
+   - **Judul harus mengandung kata kunci utama** dan sinonimnya.
+   - Gunakan **power words** untuk meningkatkan daya tarik.
+   - **Membangun citra positif** terhadap topik yang diangkat.
+4. **Daya Tarik Pembaca**:
+   - Judul harus **informatif dan menarik**.
+   - Gunakan teknik copywriting untuk **meningkatkan klik dan engagement**.
+   - Buat **judul yang unik dan memancing rasa ingin tahu**.
+
+### Format Output yang Diharapkan:
+- **Hasil harus berupa daftar judul tanpa kalimat pembuka atau penutup.**
+- **Setiap judul harus dimulai dengan angka dan diakhiri dengan titik.**
+- Contoh: \n  1. Ini adalah contoh judul yang sesuai dengan aturan.
+  2. Judul lainnya yang juga memenuhi kriteria.
+
+### Catatan Tambahan:
+- **Dilarang menyalin judul dari sumber lain.**
+- **Hindari clickbait yang menyesatkan.**
+- **Pastikan hasil akhir sesuai dengan semua kriteria di atas sebelum disajikan.**
 `;
 
 export default function ArticleTitleGenerator() {
@@ -54,52 +75,69 @@ export default function ArticleTitleGenerator() {
       .filter((title) => title.length > 5);
   };
 
+  const fetchWithTimeout = (
+    url: string,
+    options: RequestInit,
+    timeout: number
+  ) => {
+    return Promise.race([
+      fetch(url, options),
+      new Promise<Response>((_, reject) =>
+        setTimeout(() => reject(new Error('Request timed out')), timeout)
+      ),
+    ]);
+  };
+
   const generateTitlesWithRetry = async (
     userInput: string,
     maxAttempts = 3
   ): Promise<string[]> => {
+    let timeout = 60000;
+
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       try {
-        const prompt = `${systemPrompt}
-  
-  Buatkan 5 judul berita dengan deskripsi berikut: "${userInput}"
-  
-  Format Judul:
-  1. [Judul 1]
-  2. [Judul 2]
-  3. [Judul 3]
-  4. [Judul 4]
-  5. [Judul 5]
+        const prompt = `${systemInstruction}
 
-  Perhatikan hal berikut :
-  - Panjang judul harus (minimal 80 karakter dan maksimal 100 karakter)
-  - Pastikan anda hanya menulis langsung list judul tanpa kalimat tambahan
-  - Jangan menambahkan kalimat tambahan seperti "Berikut adalah judul yang saya buatkan untuk anda" atau sejenisnya
-  - Jangan menambahkan kalimat tambahan seperti "Semoga membantu" atau sejenisnya
-  - Jangan menambahkan kalimat tambahan seperti "Silakan pilih salah satu yang anda suka" atau sejenisnya
-  `;
+        Hasilkan 5 judul artikel berita sesuai dengan konteks "${userInput}"
+        
+        ### Format Output:
+        1. [Judul 1].
+        2. [Judul 2].
+        3. [Judul 3].
+        4. [Judul 4].
+        5. [Judul 5].
+        
+        ⚠️ PENTING:
+        - Jangan tambahkan kalimat pembuka atau penutup.
+        - Pastikan panjang judul antara **80-120 karakter**.
+        - Hanya tampilkan daftar judul dalam format di atas.
+        `;
 
-        const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: 'user',
-                parts: [{ text: prompt }],
-              },
-            ],
-            generationConfig: {
-              temperature: 2,
-              topP: 1,
-              topK: 64,
-              maxOutputTokens: 8192,
-              stopSequences: ['6.'],
+        const response = await fetchWithTimeout(
+          `${API_ENDPOINT}?key=${API_KEY}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-          }),
-        });
+            body: JSON.stringify({
+              contents: [
+                {
+                  role: 'user',
+                  parts: [{ text: prompt }],
+                },
+              ],
+              generationConfig: {
+                temperature: 1,
+                topP: 0.95,
+                topK: 64,
+                maxOutputTokens: 8192,
+                stopSequences: ['6.'],
+              },
+            }),
+          },
+          timeout
+        );
 
         if (!response.ok) {
           throw new Error('Failed to generate content');
@@ -118,16 +156,21 @@ export default function ArticleTitleGenerator() {
         }
 
         throw new Error('Invalid number of titles generated');
-      } catch (error) {
+      } catch (error: unknown) {
+        let errorMessage = 'Terjadi kesalahan yang tidak diketahui';
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else {
+          errorMessage = String(error);
+        }
         if (attempt === maxAttempts) {
-          throw error;
+          throw new Error(errorMessage);
         }
         await new Promise((resolve) => setTimeout(resolve, 2000));
       }
     }
 
-    // Fallback return jika semua percobaan gagal
-    throw new Error('Failed after all retry attempts');
+    throw new Error('Gagal setelah semua percobaan ulang.');
   };
 
   const generateTitles = async () => {
@@ -136,7 +179,7 @@ export default function ArticleTitleGenerator() {
     setTitles([]);
     setAlertSuccess('');
     setAlertInfo(
-      'Sedang memproses permintaan Anda. Model AI <span className="font-bold">"Gemini 2.0 Flash Thinking"</span> sedang menghasilkan judul, ini mungkin memerlukan waktu beberapa saat...'
+      'Sedang memproses permintaan Anda, ini mungkin memerlukan waktu beberapa saat...'
     );
 
     const startTime = Date.now();
@@ -150,7 +193,7 @@ export default function ArticleTitleGenerator() {
       setAlertSuccess(
         `Judul berhasil dibuat dalam ${processDuration.toFixed(
           2
-        )} detik menggunakan Model AI <span className="font-bold">"Gemini 2.0 Flash Thinking"</span>`
+        )} detik, silakan periksa dan jika kurang sesuai, silakan ulangi prosesnya.`
       );
     } catch (error) {
       console.error(error);
@@ -194,10 +237,12 @@ export default function ArticleTitleGenerator() {
       <div className='w-full bg-base-100 shadow-xl p-6 rounded-lg'>
         <div className='w-full mb-4'>
           <fieldset className='fieldset'>
-            <legend className='fieldset-legend'>Masukan Deskripsi</legend>
+            <legend className='fieldset-legend font-semibold text-lg'>
+              Masukan Deskripsi
+            </legend>
             <textarea
-              className='textarea min-h-36 w-full resize-none border-2 border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-primary transition-all duration-300 hover:border-primary focus:outline-none'
-              placeholder='Masukkan deskripsi yang mencakup kata kunci dan topik. Contoh : "Bimbingan Kerohanian di Rutan Wonosobo"'
+              className='textarea textarea-bordered min-h-36 w-full resize-none focus:ring-0 focus:border-transparent'
+              placeholder='Masukkan deskripsi yang mencakup kata kunci dan topik, seperti: "Kegiatan Pembinaan Kemandirian di Rutan Wonosobo"'
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -217,7 +262,7 @@ export default function ArticleTitleGenerator() {
           >
             {loading ? (
               <div className='flex items-center justify-center'>
-                <span className='loading loading-infinity loading-lg text-primary'></span>
+                <span className='loading loading-spinner'></span>
                 <span className='ml-2'>Sedang membuat judul...</span>
               </div>
             ) : titles.length > 0 ? (
@@ -229,7 +274,10 @@ export default function ArticleTitleGenerator() {
         </div>
 
         {alertInfo && (
-          <div role='alert' className='alert alert-info alert-soft mt-4'>
+          <div
+            role='alert'
+            className='alert alert-info alert-soft flex justify-center items-center text-center'
+          >
             <span dangerouslySetInnerHTML={{ __html: alertInfo }} />
           </div>
         )}
@@ -269,7 +317,10 @@ export default function ArticleTitleGenerator() {
         )}
 
         {alertSuccess && (
-          <div role='alert' className='alert alert-success alert-soft mt-4'>
+          <div
+            role='alert'
+            className='alert alert-success alert-soft flex justify-center items-center text-center'
+          >
             <span dangerouslySetInnerHTML={{ __html: alertSuccess }} />
           </div>
         )}

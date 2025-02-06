@@ -1,15 +1,15 @@
 'use client';
 import { useState } from 'react';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
+import { FaNewspaper, FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import Link from 'next/link';
 import { useMetadata } from '@/hooks/useMetadata';
 
 const API_ENDPOINT =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-thinking-exp-01-21:generateContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-pro-exp-02-05:generateContent';
 const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
 // Prompt sistem dalam bahasa Indonesia
-const systemPrompt = `
+const systemInstruction = `
 Anda adalah jurnalis profesional yang ahli dalam menulis berita untuk media sosial. Tugas Anda adalah membuat konten berita yang menarik, faktual, dan terstruktur secara profesional berdasarkan judul yang diberikan.
 
 Persyaratan Utama:
@@ -18,6 +18,7 @@ Persyaratan Utama:
    - Isi: 3-4 paragraf dengan detail pendukung, konteks, dan dampak
    - Kutipan: Sertakan 1 kutipan yang relevan dengan atribusi yang tepat, dan sematkan "Kepala Rutan Wonosobo" sebagai pembuat kutipan
    - Kesimpulan: Rangkum poin-poin kunci dan implikasi ke depan
+   - Hashtag: Gunakan hashtag berikut: #kemenimipas #guardandguide #infoimipas #pemasyarakatan
 
 2. Gaya Penulisan:
    - Gunakan struktur piramida terbalik
@@ -32,9 +33,10 @@ Persyaratan Utama:
    - Sertakan statistik relevan jika ada
    - Struktur konten untuk mudah dibaca
    - Pertahankan nada profesional namun mudah diakses
+   - Panjang total artikel: **2000-2200 karakter** (Pastikan artikel Anda sesuai dengan panjang ini)
 
 4. Pedoman Format:
-   - Mulai dengan lokasi dan tanggal: "Wonosobo - [Paragraf Pembuka] .[Tanggal dalam format (DD/MM) hari ini atau sekarang. contoh: (05/02) pastikan realtime saat ini]"
+   - Mulai dengan lokasi dan tanggal: "Wonosobo - [Paragraf Pembuka].(DD/MM) todayDate"
    - Sertakan atribusi yang tepat untuk kutipan
    - Jaga format yang konsisten
    - Akhiri dengan kesimpulan yang menarik
@@ -48,7 +50,8 @@ Persyaratan Utama:
 6. Catatan:
     - Hindari kalimat seperti "Berikut adalah artikel berita yang telah dibuat berdasarkan judul yang diberikan, mengikuti semua persyaratan dan pedoman yang Anda sebutkan:"
     - Jangan menyertakan prompt ini dalam artikel Anda
-    - Langsung buat artikel berita yang menarik berdasarkan judul yang diberikan
+    - Langsung mulai dengan judul artikel yang diberikan
+    - Gunakan bahasa Indonesia baku dan benar
 `;
 
 export default function ArticleGenerator() {
@@ -66,31 +69,51 @@ export default function ArticleGenerator() {
   const [error, setError] = useState('');
 
   const formatArticleResponse = (text: string) => {
-    text = text.replace(/^```html/g, '');
-    text = text.replace(/```$/g, '');
     return text
+      .replace(/^```html\s*/, '')
+      .replace(/```\s*$/, '')
       .replace(/\n{3,}/g, '\n\n')
-      .replace(/(<p[^>]*>)\s+/g, '$1')
-      .replace(/\s+(<\/p>)/g, '$1')
+      .replace(
+        /(<(p|h[1-6]|div|blockquote|li|ul|ol|pre|table)[^>]*>)\s+/g,
+        '$1'
+      )
+      .replace(/\s+(<\/(p|h[1-6]|div|blockquote|li|ul|ol|pre|table)>)/g, '$1')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/&amp;/g, '&amp;')
+      .replace(/<p>\s*\.\s*/g, '<p>')
+      .replace(/\s*\.\s*<\/p>/g, '</p>')
+      .replace(/<\/p>\s*\.\s*<p>/g, '</p>\n<p>')
       .trim();
   };
 
+  const getFormattedDate = () => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    return `(${day}/${month})`;
+  };
+
   const constructPrompt = (title: string) => {
-    return `${systemPrompt}
+    const todayDate = getFormattedDate();
 
-Judul: "${title}"
+    return `${systemInstruction}
 
-Format Output yang Dibutuhkan:
-<article class="news-content">
-  <h2 class="text-3xl font-bold mb-6">${title}</h2>
-  <div class="article-body space-y-4">
-    [Paragraf Pembuka dengan Lokasi dan Tanggal]
-    [Paragraf Pendukung dengan Konteks]
-    [Kutipan Ahli dan Analisis]
-    [Dampak dan Implikasi]
-    [Paragraf Penutup]
-  </div>
-</article>
+Buatlah sebuah artikel berita dengan judul "${title}" sesuai dengan ketentuan yang sudah dijelaskan
+
+Format Output:
+    <p class="text-lg md:text-xl font-bold mb-6">${title}</p>
+    <p class="mb-4 text-justify">[Paragraf Pembuka dengan Lokasi dan Tanggal].${todayDate}</p>
+    <p class="mb-4 text-justify">[Paragraf Pendukung dengan Konteks]</p>
+    <p class="mb-4 text-justify">[Kutipan Ahli dan Analisis]</p>
+    <p class="mb-4 text-justify">[Dampak dan Implikasi]</p>
+    <p class="mb-4 text-justify">[Paragraf Penutup]</p>
+    <p class="mb-4 text-justify">[Hashtag]</p>
+
+PENTING:
+- Langsung buat dari bagian : <p class="text-lg md:text-xl font-bold mb-6">${title}</p>
+- Jangan tambahkan kalimat pembuka atau penutup.
+- Panjang artikel (wajib) antara **2000 karakter** sampai **2200 karakter**
 `;
   };
 
@@ -115,10 +138,11 @@ Format Output yang Dibutuhkan:
               },
             ],
             generationConfig: {
-              temperature: 0.7,
-              topP: 0.8,
-              topK: 40,
-              maxOutputTokens: 65536,
+              temperature: 1,
+              topP: 0.95,
+              topK: 64,
+              maxOutputTokens: 8192,
+              stopSequences: ['<p class="mb-4 text-justify">[Hashtag]</p>'],
             },
             safetySettings: [
               {
@@ -167,7 +191,7 @@ Format Output yang Dibutuhkan:
     setArticle('');
     setError('');
     setAlertSuccess('');
-    setAlertInfo('Sedang menghasilkan artikel Anda dengan pemrosesan AI...');
+    setAlertInfo('Sedang menghasilkan artikel Anda, mohon tunggu...');
 
     const startTime = Date.now();
 
@@ -180,7 +204,7 @@ Format Output yang Dibutuhkan:
       setAlertSuccess(
         `Artikel berhasil dibuat dalam ${processDuration.toFixed(
           2
-        )} detik menggunakan Model AI "Gemini 2.0 Flash Thinking"`
+        )} detik. AI dapat melakukan kesalahan, jadi pastikan untuk memeriksa kembali artikel Anda sebelum digunakan.`
       );
     } catch (error) {
       setError(
@@ -196,7 +220,21 @@ Format Output yang Dibutuhkan:
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(article);
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = article;
+
+      let formattedText = tempElement.innerHTML
+        .replace(/<\/p>/g, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/\n+/g, '\n')
+        .replace(/[ ]+/g, ' ')
+        .trim();
+
+      formattedText = formattedText.replace(/^\s+/gm, '');
+      formattedText = formattedText.replace(/\n/g, '\n\n');
+
+      await navigator.clipboard.writeText(formattedText);
+
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     } catch (err) {
@@ -205,7 +243,7 @@ Format Output yang Dibutuhkan:
   };
 
   return (
-    <div className='min-h-screen w-full flex flex-col items-center p-4 max-w-7xl mx-auto'>
+    <div className='min-h-screen w-full flex flex-col items-center max-w-7xl mx-auto'>
       <div className='w-full flex justify-between mb-8'>
         <Link href='/dashboard/article' className='btn btn-neutral gap-2'>
           <FaArrowLeft /> Kembali
@@ -226,14 +264,41 @@ Format Output yang Dibutuhkan:
       </div>
 
       <div className='w-full bg-base-100 shadow-xl p-6 rounded-lg space-y-6'>
+        <div
+          tabIndex={0}
+          className='collapse collapse-arrow border-base-300 bg-base-100 border border-base-300 border'
+        >
+          <div className='collapse-title font-semibold flex items-center gap-2'>
+            <FaNewspaper /> Detail Artikel Berita
+          </div>
+          <div className='collapse-content text-sm'>
+            <ul className='list-disc pl-4 space-y-2'>
+              <li>
+                Artikel telah diformat sesuai standar jurnalistik profesional.
+              </li>
+              <li>
+                Panjang artikel disesuaikan untuk performa optimal di media
+                sosial (Instagram, Facebook, dan Twitter), berkisar antara{' '}
+                <strong>2.000 - 2.200 karakter</strong>.
+              </li>
+              <li>
+                Memuat kutipan yang relevan dan telah diberi atribusi dengan
+                benar.
+              </li>
+              <li>
+                Sudah mencakup hashtag yang relevan untuk meningkatkan
+                jangkauan.
+              </li>
+              <li>
+                Struktur artikel mengikuti <strong>piramida terbalik</strong>{' '}
+                agar informasi penting tersampaikan lebih dulu.
+              </li>
+            </ul>
+          </div>
+        </div>
         <div className='form-control w-full'>
-          <label className='label'>
-            <span className='label-text text-lg font-semibold'>
-              Judul Artikel
-            </span>
-          </label>
           <textarea
-            className='textarea textarea-bordered min-h-24 w-full resize-none focus:ring-none focus:outline-none'
+            className='textarea textarea-bordered min-h-24 w-full resize-none focus:ring-0 focus:border-transparent'
             placeholder='Masukkan judul artikel Anda di sini...'
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -242,49 +307,58 @@ Format Output yang Dibutuhkan:
             }
             disabled={loading}
           />
-          {error && <p className='text-error mt-2'>{error}</p>}
+          {error && (
+            <p className='text-error text-sm text-center mt-2'>{error}</p>
+          )}
         </div>
 
-        <div className='flex gap-4'>
+        <div className='flex flex-col gap-4 md:flex-row md:gap-6'>
           <button
-            className='btn btn-primary flex-1'
+            className='btn btn-primary w-full md:flex-1'
             onClick={generateArticle}
             disabled={loading}
           >
             {loading ? (
               <>
-                <span className='loading loading-spinner text-primary loading-lg'></span>
-                Membuat Artikel...
+                <span className='loading loading-spinner'></span>
+                <span className='ml-2'>Membuat Artikel...</span>
               </>
             ) : (
               'Buat Artikel'
             )}
           </button>
+
           {article && (
-            <button className='btn btn-soft' onClick={copyToClipboard}>
+            <button
+              className='btn btn-soft w-full md:w-auto'
+              onClick={copyToClipboard}
+            >
               Salin ke Clipboard
             </button>
           )}
         </div>
 
         {alertInfo && (
-          <div role='alert' className='alert alert-info'>
+          <div
+            role='alert'
+            className='alert alert-info alert-soft flex justify-center items-center text-center'
+          >
             <span>{alertInfo}</span>
           </div>
         )}
 
-        {alertSuccess && (
-          <div role='alert' className='alert alert-success'>
-            <span>{alertSuccess}</span>
+        {article && (
+          <div className='mt-8 prose prose-sm md:prose-base w-full'>
+            <div dangerouslySetInnerHTML={{ __html: article }} />
           </div>
         )}
 
-        {article && (
-          <div className='mt-8 prose max-w-none'>
-            <div
-              className='card bg-base-100 shadow-xl p-6'
-              dangerouslySetInnerHTML={{ __html: article }}
-            />
+        {alertSuccess && (
+          <div
+            role='alert'
+            className='alert alert-success alert-soft flex justify-center items-center text-center'
+          >
+            <span>{alertSuccess}</span>
           </div>
         )}
       </div>

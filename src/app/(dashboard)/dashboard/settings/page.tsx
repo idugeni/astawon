@@ -315,7 +315,7 @@ export default function SettingsPage() {
           >
             {isSubmitting ? (
               <div className='flex items-center justify-center'>
-                <span className='loading loading-infinity loading-lg text-primary'></span>
+                <span className='loading loading-spinner'></span>
                 <span className='ml-2'>Updating...</span>
               </div>
             ) : (
