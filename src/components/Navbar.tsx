@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FaBars, FaGoogle, FaXmark, FaGithubAlt } from 'react-icons/fa6';
+import { FaBars, FaGoogle, FaXmark, FaUserGear  } from 'react-icons/fa6';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/lib/firebase';
 
@@ -70,8 +70,8 @@ export default function Navbar() {
               href='/dashboard'
               className='btn btn-primary group rounded-full px-6 hover:bg-base-content transition-all duration-300'
             >
-              <FaGithubAlt className='h-4 w-4 transition-transform group-hover:scale-105' />
-              <span className='ml-2 hidden sm:block text-sm md:text-base'>
+              <FaUserGear  className='h-4 w-4 transition-transform group-hover:scale-105' />
+              <span className='hidden sm:block text-sm md:text-base'>
                 Dashboard
               </span>
             </Link>
