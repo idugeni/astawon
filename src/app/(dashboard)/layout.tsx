@@ -76,11 +76,13 @@ export default function DashboardLayout({
 
   if (!user) {
     return (
-      <div className='text-center p-8'>
-        Unauthorized! Please{' '}
-        <Link href='/login' className='link link-primary'>
-          login
-        </Link>
+      <div className="flex items-center justify-center min-h-screen bg-base-200">
+        <div className="text-center p-8">
+          Unauthorized! Please{' '}
+          <Link href="/login" className="link link-primary">
+            login
+          </Link>
+        </div>
       </div>
     );
   }
@@ -222,11 +224,10 @@ export default function DashboardLayout({
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`flex gap-3 items-center py-3 px-4 rounded-lg transition-colors ${
-                    pathname === link.href
-                      ? 'bg-primary text-primary-content'
-                      : 'hover:bg-base-200'
-                  }`}
+                  className={`flex gap-3 items-center py-3 px-4 rounded-lg transition-colors ${pathname === link.href
+                    ? 'bg-primary text-primary-content'
+                    : 'hover:bg-base-200'
+                    }`}
                 >
                   {link.icon}
                   <span className='font-medium'>{link.name}</span>
