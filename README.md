@@ -113,7 +113,7 @@ The project uses the following dependencies:
 
 We **welcome contributions** to the project! If you'd like to help, please follow these steps:  
 
-### 🛠️ Steps to Contribute  
+### Steps to Contribute  
 
 1. **Fork the repository** → Click the `Fork` button at the top right of this repo.  
 2. **Create a new branch** → Run:  
@@ -141,7 +141,7 @@ We **welcome contributions** to the project! If you'd like to help, please follo
 
 ### Thank You for Your Contribution!  
 
-Every contribution makes this project better! Feel free to ask questions or discuss ideas in **issues** or **pull requests**. 🚀💖  
+Every contribution makes this project better! Feel free to ask questions or discuss ideas in **issues** or **pull requests**.
 
 ## **Links**
 
