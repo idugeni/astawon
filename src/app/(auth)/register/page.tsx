@@ -186,15 +186,21 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <div className='form-control mt-6'>
+            <div className="form-control mt-6">
               <button
-                type='submit'
-                className={`btn w-full btn-primary ${
-                  loading ? 'pointer-events-none' : ''
-                }`}
+                type="submit"
+                className={`btn w-full btn-primary ${loading ? 'pointer-events-none' : ''
+                  }`}
                 disabled={loading}
               >
-                {loading ? 'Loading...' : 'Daftar'}
+                {loading ? (
+                  <>
+                    <span className="loading loading-spinner"></span>
+                    Loading...
+                  </>
+                ) : (
+                  'Daftar'
+                )}
               </button>
             </div>
           </form>
