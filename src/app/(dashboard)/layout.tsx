@@ -161,7 +161,7 @@ export default function DashboardLayout({
         </nav>
 
         {/* Main Content */}
-        <main className='flex-1 p-6 bg-base-200 min-h-screen'>{children}</main>
+        <main className='flex-1 p-8 bg-base-200 min-h-screen'>{children}</main>
 
         {/* Footer */}
         <footer className='footer footer-center p-4 bg-base-300 text-base-content flex flex-col md:flex-row justify-between items-center'>
