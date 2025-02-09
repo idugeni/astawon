@@ -10,29 +10,38 @@ Overall, **Astawon** is a project built to leverage the latest web technologies 
 
 ## Badges
 
-| Version | Status | License |
-|---------|--------|---------|
-| ![Version](https://img.shields.io/badge/version-0.1.0--alpha.1-%23ff5733) | ![Status](https://img.shields.io/badge/status-alpha-orange) | ![License](https://img.shields.io/github/license/idugeni/astawon) |
+<div style="text-align: center;">
+  <!-- Proyek dan Status -->
+  <img src="https://img.shields.io/badge/version-0.1.0--alpha.1-%23ff5733" alt="Version" />
+  <img src="https://img.shields.io/badge/status-alpha-orange" alt="Status" />
+  <img src="https://img.shields.io/github/license/idugeni/astawon" alt="License" />
+  <img src="https://img.shields.io/github/actions/workflow/status/idugeni/astawon/ci.yml" alt="Build Status" />
+</div>
 
-| Author | Repo Size | Code Size |
-|--------|----------|----------|
-| ![Author](https://img.shields.io/badge/Author-Eliyanto_Sarage-blue) | ![Repo Size](https://img.shields.io/github/repo-size/idugeni/astawon) | ![Code Size](https://img.shields.io/github/languages/code-size/idugeni/astawon) |
+<div style="text-align: center;">
+  <!-- Info Proyek -->
+  <img src="https://img.shields.io/badge/Author-Eliyanto_Sarage-blue" alt="Author" />
+  <img src="https://img.shields.io/github/repo-size/idugeni/astawon" alt="Repo Size" />
+  <img src="https://img.shields.io/github/languages/code-size/idugeni/astawon" alt="Code Size" />
+</div>
 
-| Open Issues | Open PRs |
-|------------|---------|
-| ![Open Issues](https://img.shields.io/github/issues/idugeni/astawon) | ![Open PRs](https://img.shields.io/github/issues-pr/idugeni/astawon) |
+<div style="text-align: center;">
+  <!-- Masalah & Pull Request -->
+  <img src="https://img.shields.io/github/issues/idugeni/astawon" alt="Open Issues" />
+  <img src="https://img.shields.io/github/issues-pr/idugeni/astawon" alt="Open PRs" />
+</div>
 
-| Last Commit | Build Status |
-|------------|-------------|
-| ![Last Commit](https://img.shields.io/github/last-commit/idugeni/astawon) | ![Build Status](https://img.shields.io/github/actions/workflow/status/idugeni/astawon/ci.yml) |
+<div style="text-align: center;">
+  <!-- Kontribusi & Forks -->
+  <img src="https://img.shields.io/github/contributors/idugeni/astawon" alt="Contributors" />
+  <img src="https://img.shields.io/github/forks/idugeni/astawon?style=social" alt="Forks" />
+</div>
 
-| Made with | Platform |
-|----------|---------|
-| ![Made with](https://img.shields.io/badge/Made%20with-JavaScript-yellow) | ![Platform](https://img.shields.io/badge/Platform-Web-lightgrey) |
-
-| Contributors | Forks |
-|-------------|------|
-| ![Contributors](https://img.shields.io/github/contributors/idugeni/astawon) | ![Forks](https://img.shields.io/github/forks/idugeni/astawon?style=social) |
+<div style="text-align: center;">
+  <!-- Teknologi & Platform -->
+  <img src="https://img.shields.io/badge/Made%20with-JavaScript-yellow" alt="Made with" />
+  <img src="https://img.shields.io/badge/Platform-Web-lightgrey" alt="Platform" />
+</div>
 
 ## Features  
 
