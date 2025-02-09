@@ -24,7 +24,7 @@ export default function JadwalBerita() {
   const hariIni = new Date().getDay();
 
   const isOnline = (index: number) => {
-    return hariIni === index;
+    return hariIni === ((index + 1) % 7);
   };
 
   return (
@@ -53,9 +53,8 @@ export default function JadwalBerita() {
               {jadwalHarian.map((jadwal, index) => (
                 <div
                   key={index}
-                  className={`card bg-base-200 hover:bg-base-300 transition-colors duration-300 ${
-                    isOnline(index) ? 'border-4 border-primary' : ''
-                  }`}
+                  className={`card bg-base-200 hover:bg-base-300 transition-colors duration-300 ${isOnline(index) ? 'border-4 border-primary' : ''
+                    }`}
                 >
                   <div className='card-body p-4 flex items-center justify-between'>
                     <div className='avatar avatar-placeholder'>
@@ -73,9 +72,8 @@ export default function JadwalBerita() {
                       </div>
                       {/* Menambahkan Status Online atau Offline */}
                       <div
-                        className={`badge badge-sm mt-2 ${
-                          isOnline(index) ? 'badge-success' : 'badge-error'
-                        }`}
+                        className={`badge badge-sm mt-2 ${isOnline(index) ? 'badge-success' : 'badge-error'
+                          }`}
                       >
                         {isOnline(index) ? 'Online' : 'Offline'}
                       </div>
