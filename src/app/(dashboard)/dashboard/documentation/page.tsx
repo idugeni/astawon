@@ -2,10 +2,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
-import rehypeStringify from 'rehype-stringify';
+import remarkHtml from 'remark-html';  // Import remark-html
 import DOMPurify from 'dompurify';
 import { useMetadata } from '@/hooks/useMetadata';
+import 'github-markdown-css/github-markdown.css';  // GitHub markdown CSS
 
 export default function DocumentationPage() {
   useMetadata('Documentation', 'Documentation page for the admin panel');
@@ -35,16 +35,28 @@ export default function DocumentationPage() {
       const data = await response.json();
       const markdownText = decodeURIComponent(escape(atob(data.content)));
 
+      // Proses Markdown dengan remark dan gunakan remark-html untuk mengonversi ke HTML
       const processedContent = await remark()
         .use(remarkGfm)
-        .use(rehypeRaw)
-        .use(rehypeStringify)
+        .use(remarkHtml)
         .process(markdownText);
 
+      // Debug: Periksa HTML yang dihasilkan setelah proses remark
+      console.log("Processed HTML (after remark):", processedContent.toString());
+
+      // Sanitasi HTML dengan DOMPurify
       const sanitizedHtml = DOMPurify.sanitize(processedContent.toString(), {
-        ALLOWED_TAGS: ['table', 'thead', 'tbody', 'tr', 'th', 'td', 'strong', 'em', 'a', 'p', 'ul', 'ol', 'li', 'div', 'span', 'br', 'pre', 'code'],
+        ALLOWED_TAGS: [
+          'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'img',
+          'strong', 'em', 'a', 'p', 'ul', 'ol', 'li', 'div', 'span', 'br', 'pre', 'code'
+        ],
+        ALLOWED_ATTR: ['src', 'alt', 'title', 'width', 'height'] // Atribut src untuk img harus diizinkan
       });
 
+      // Debug: Periksa HTML setelah sanitasi
+      console.log("Sanitized HTML:", sanitizedHtml);
+
+      // Simpan dan tampilkan konten
       localStorage.setItem('readmeContent', sanitizedHtml);
       setReadmeContent(sanitizedHtml);
     } catch (err) {
@@ -85,8 +97,11 @@ export default function DocumentationPage() {
       <h2 className='text-center text-3xl font-bold text-primary mb-6'>
         Project Documentation
       </h2>
-      <div className='card bg-[#0d1017] shadow-lg rounded-lg overflow-hidden p-6'>
-        <div className='markdown-body prose' dangerouslySetInnerHTML={{ __html: readmeContent }} />
+      <div className='card bg-[#0d1017] shadow-lg rounded-lg overflow-hidden'>
+        <div
+          className='markdown-body prose p-4'
+          dangerouslySetInnerHTML={{ __html: readmeContent }}
+        />
       </div>
     </div>
   );
