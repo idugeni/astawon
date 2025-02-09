@@ -1,30 +1,27 @@
-'use client'
-import { useEffect } from 'react'
-import { siteConfig } from '@/config/metadata'
+'use client';
 
-export function useMetadata(title: string, description?: string) {
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+const metadataTemplate = '%s | Astawon';
+const defaultTitle = 'Astawon - Humas Rutan Wonosobo';
+
+export function useMetadata(title = defaultTitle, description = 'Astawon adalah platform digital yang dirancang untuk mempermudah pengelolaan informasi dan penyampaian perkembangan terkini tentang Rutan Wonosobo.') {
+  const router = useRouter();
+
   useEffect(() => {
-    document.title = `${title} - ${siteConfig.name}`
-    
-    const metaDescription = document.querySelector("meta[name='description']")
-    const prevDescription = metaDescription ? metaDescription.getAttribute('content') : ''
-    
-    if (description) {
+    if (typeof document !== 'undefined') {
+      const formattedTitle = metadataTemplate.replace('%s', title);
+      document.title = formattedTitle;
+      const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
-        metaDescription.setAttribute('content', description)
+        metaDescription.setAttribute('content', description);
       } else {
-        const meta = document.createElement('meta')
-        meta.name = 'description'
-        meta.content = description
-        document.head.appendChild(meta)
+        const meta = document.createElement('meta');
+        meta.name = 'description';
+        meta.content = description;
+        document.head.appendChild(meta);
       }
     }
-
-    return () => {
-      document.title = siteConfig.name
-      if (metaDescription) {
-        metaDescription.setAttribute('content', prevDescription || siteConfig.description || '')
-      }
-    }
-  }, [title, description])
+  }, [title, description, router]);
 }
