@@ -105,17 +105,19 @@ body {
   }
 }
 
+/* Markdown body */
 .markdown-body {
-  background-color: #0d1017;
-  color: #c9d1d9;
-  border-radius: 10px;
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
+  background-color: #0d1117 !important; /* Dark background */
+  color: #c9d1d9 !important; /* Light gray text */
+  border-radius: 10px !important;
+  font-family: Arial, sans-serif !important;
+  line-height: 1.6 !important;
+  padding: 20px !important;
 }
 
 /* Paragraph */
 .markdown-body p {
-  margin-bottom: 1rem;
+  margin-bottom: 1rem !important;
 }
 
 /* Heading styles */
@@ -123,101 +125,127 @@ body {
 .markdown-body h2,
 .markdown-body h3,
 .markdown-body h4 {
-  color: #e6edf3;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  color: #e6edf3 !important; /* Light text for headings */
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
 .markdown-body h1 {
-  font-size: 2rem;
-  border-bottom: 2px solid #30363d;
-  padding-bottom: 0.3rem;
+  font-size: 2rem !important;
+  border-bottom: 2px solid #30363d !important; /* Subtle border for h1 */
+  padding-bottom: 0.3rem !important;
 }
 
 .markdown-body h2 {
-  font-size: 1.75rem;
-  border-bottom: 1px solid #30363d;
-  padding-bottom: 0.3rem;
+  font-size: 1.75rem !important;
+  border-bottom: 1px solid #30363d !important; /* Subtle border for h2 */
+  padding-bottom: 0.3rem !important;
 }
 
 .markdown-body h3 {
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
 }
 
 .markdown-body h4 {
-  font-size: 1.25rem;
+  font-size: 1.25rem !important;
 }
 
 /* Links */
 .markdown-body a {
-  color: #58a6ff;
-  text-decoration: none;
+  color: #58a6ff !important; /* GitHub blue link */
+  text-decoration: none !important;
 }
 
 .markdown-body a:hover {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 
 /* Code blocks */
 .markdown-body pre {
-  background-color: #161b22;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 6px;
-  overflow-x: auto;
+  background-color: #161b22 !important; /* Darker background for code blocks */
+  padding: 1rem !important;
+  margin: 1rem 0 !important;
+  border-radius: 6px !important;
+  overflow-x: auto !important;
+  color: #f8f8f2 !important; /* Light text for code */
 }
 
 .markdown-body code {
-  background-color: #161b22;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
+  background-color: #161b22 !important; /* Dark background for inline code */
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 4px !important;
+  font-family: 'Courier New', monospace !important;
+  color: #f8f8f2 !important; /* Light text for inline code */
 }
 
 /* Blockquotes */
 .markdown-body blockquote {
-  border-left: 4px solid #58a6ff;
-  padding-left: 1rem;
-  color: #8b949e;
-  margin: 1rem 0;
+  border-left: 4px solid #58a6ff !important; /* GitHub blue border */
+  padding-left: 1rem !important;
+  color: #8b949e !important; /* Light gray text for blockquotes */
+  background-color: #21262d !important; /* Darker background for blockquotes */
+  margin: 1rem 0 !important;
 }
 
 /* Lists */
 .markdown-body ul {
-  padding-left: 1.5rem;
-  list-style-type: disc;
+  padding-left: 1.5rem !important;
+  list-style-type: disc !important;
 }
 
 .markdown-body ol {
-  padding-left: 1.5rem;
-  list-style-type: decimal;
+  padding-left: 1.5rem !important;
+  list-style-type: decimal !important;
 }
 
 .markdown-body li {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.3rem !important;
 }
 
 /* Tables */
 .markdown-body table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1rem 0 !important;
 }
 
 .markdown-body th,
 .markdown-body td {
-  border: 1px solid #30363d;
-  padding: 0.5rem;
+  border: 1px solid #30363d !important; /* Subtle border */
+  padding: 0.5rem !important;
+  color: #c9d1d9 !important; /* Light text for table cells */
 }
 
 .markdown-body th {
-  background-color: #161b22;
-  color: #e6edf3;
+  background-color: #161b22 !important; /* Dark background for table headers */
+  color: #e6edf3 !important; /* Light text for table headers */
 }
 
 /* Images */
 .markdown-body img {
-  max-width: 100%;
-  border-radius: 6px;
-  margin: 1rem 0;
+  max-width: 100% !important;
+  border-radius: 6px !important;
+  margin: 1rem 0 !important;
+}
+
+/* Strong (bold) text */
+.markdown-body strong {
+  color: #f8f8f2 !important; /* Bold text color */
+}
+
+/* Emphasized (italic) text */
+.markdown-body em {
+  color: #8b949e !important; /* Italic text color */
+}
+
+/* Horizontal line */
+.markdown-body hr {
+  border: 1px solid #30363d !important; /* Light border for horizontal rule */
+  margin: 1.5rem 0 !important;
+}
+
+/* Block level code snippets */
+.markdown-body .highlight pre {
+  background-color: #21262d !important; /* Dark background for highlighted code */
+  color: #f8f8f2 !important; /* Light text for highlighted code */
 }
