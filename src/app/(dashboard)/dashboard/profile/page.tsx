@@ -57,7 +57,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className='space-y-8 flex justify-center flex-col items-center'>
+    <div className='space-y-8 min-h-screen w-full flex flex-col justify-center items-center mx-auto'>
       {/* Profile Header */}
       <div className='card bg-gradient-to-r from-primary to-secondary shadow-2xl p-8 rounded-2xl text-center text-white max-w-lg w-full mb-8'>
         <div className='flex flex-col items-center space-y-4'>
