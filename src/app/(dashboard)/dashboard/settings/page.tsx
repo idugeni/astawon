@@ -33,8 +33,8 @@ export default function AccountSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-base-200">
-      <div className="mx-auto max-w-4xl">
+    <div className="min-h-screen flex justify-center items-center bg-base-200">
+      <div className="mx-4 sm:mx-auto max-w-3xl w-full">
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
             <h1 className="card-title text-2xl mb-6 flex justify-center items-center">
