@@ -10,7 +10,7 @@ Overall, **Astawon** is a project built to leverage the latest web technologies 
 
 ## Badges
 
-<div style="text-align: center;">
+<div align="center">
   <!-- Proyek dan Status -->
   <img src="https://img.shields.io/badge/version-0.1.0--alpha.1-%23ff5733" alt="Version" />
   <img src="https://img.shields.io/badge/status-alpha-orange" alt="Status" />
@@ -18,26 +18,26 @@ Overall, **Astawon** is a project built to leverage the latest web technologies 
   <img src="https://img.shields.io/github/actions/workflow/status/idugeni/astawon/ci.yml" alt="Build Status" />
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <!-- Info Proyek -->
   <img src="https://img.shields.io/badge/Author-Eliyanto_Sarage-blue" alt="Author" />
   <img src="https://img.shields.io/github/repo-size/idugeni/astawon" alt="Repo Size" />
   <img src="https://img.shields.io/github/languages/code-size/idugeni/astawon" alt="Code Size" />
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <!-- Masalah & Pull Request -->
   <img src="https://img.shields.io/github/issues/idugeni/astawon" alt="Open Issues" />
   <img src="https://img.shields.io/github/issues-pr/idugeni/astawon" alt="Open PRs" />
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <!-- Kontribusi & Forks -->
   <img src="https://img.shields.io/github/contributors/idugeni/astawon" alt="Contributors" />
   <img src="https://img.shields.io/github/forks/idugeni/astawon?style=social" alt="Forks" />
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <!-- Teknologi & Platform -->
   <img src="https://img.shields.io/badge/Made%20with-JavaScript-yellow" alt="Made with" />
   <img src="https://img.shields.io/badge/Platform-Web-lightgrey" alt="Platform" />
@@ -47,15 +47,13 @@ Overall, **Astawon** is a project built to leverage the latest web technologies 
 
 The project includes the following features:  
 
-| Feature | Description |
-|------------|------------|
-| ![Next.js](https://img.shields.io/badge/Next.js-000?logo=next.js) | Modern Next.js framework with **Turbopack** for fast builds. |
-| ![Firebase](https://img.shields.io/badge/Firebase-ffca28?logo=firebase) | Firebase integration for authentication and database. |
-| ![AI](https://img.shields.io/badge/Generative%20AI-blue?logo=google) | Generative AI functionality for dynamic content generation. |
-| ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38b2ac?logo=tailwindcss) | TailwindCSS for responsive and customizable UI components. |
-| ![TypeScript](https://img.shields.io/badge/TypeScript-007acc?logo=typescript) | TypeScript support for safer and scalable development. |
-| ![Recharts](https://img.shields.io/badge/Recharts-0088cc?logo=data:image/svg+xml;base64,...) | Recharts for dynamic data visualization. |
-| ![SweetAlert2](https://img.shields.io/badge/SweetAlert2-ff5f6d?logo=sweetalert) | SweetAlert2 for modern and stylish alerts. |
+- <img src="https://img.shields.io/badge/Next.js-000?logo=next.js" alt="Next.js" /> : Modern Next.js framework with **Turbopack** for fast builds.
+- <img src="https://img.shields.io/badge/Firebase-ffca28?logo=firebase" alt="Firebase" /> : Firebase integration for authentication and database.
+- <img src="https://img.shields.io/badge/Generative%20AI-blue?logo=google" alt="Generative AI" /> : Generative AI functionality for dynamic content generation.
+- <img src="https://img.shields.io/badge/TailwindCSS-38b2ac?logo=tailwindcss" alt="TailwindCSS" /> : TailwindCSS for responsive and customizable UI components.
+- <img src="https://img.shields.io/badge/TypeScript-007acc?logo=typescript" alt="TypeScript" /> : TypeScript support for safer and scalable development.
+- <img src="https://img.shields.io/badge/Recharts-0088cc?logo=data:image/svg+xml;base64,..." alt="Recharts" /> : Recharts for dynamic data visualization.
+- <img src="https://img.shields.io/badge/SweetAlert2-ff5f6d?logo=sweetalert" alt="SweetAlert2" /> : SweetAlert2 for modern and stylish alerts.
 
 ## Installation
 
@@ -109,14 +107,12 @@ npm install
 
 The project uses the following dependencies:
 
-| Dependency | Description |
-|------------|------------|
-| ![Firebase](https://img.shields.io/badge/@firebase/app-orange) <br> ![Auth](https://img.shields.io/badge/@firebase/auth-orange) <br> ![Firebase](https://img.shields.io/badge/firebase-orange) | Firebase authentication and app management |
-| ![Google Generative AI](https://img.shields.io/badge/@google/generative--ai-blue) | Google Generative AI services |
-| ![Next.js](https://img.shields.io/badge/next.js-black) <br> ![React](https://img.shields.io/badge/react-blue) <br> ![ReactDOM](https://img.shields.io/badge/react--dom-blue) | Core Next.js and React libraries |
-| ![TailwindCSS](https://img.shields.io/badge/tailwindcss-teal) <br> ![DaisyUI](https://img.shields.io/badge/daisyui-purple) | UI styling with TailwindCSS |
-| ![TypeScript](https://img.shields.io/badge/typescript-blue) | TypeScript support |
-| ![Recharts](https://img.shields.io/badge/recharts-green) <br> ![Remark](https://img.shields.io/badge/remark-grey) <br> ![SweetAlert2](https://img.shields.io/badge/sweetalert2-pink) | Data visualization, markdown rendering, and alerts |
+- <img src="https://img.shields.io/badge/@firebase/app-orange" alt="Firebase App" /> , <img src="https://img.shields.io/badge/@firebase/auth-orange" alt="Firebase Auth" /> , <img src="https://img.shields.io/badge/firebase-orange" alt="Firebase" /> : Firebase authentication and app management.
+- <img src="https://img.shields.io/badge/@google/generative--ai-blue" alt="Google Generative AI" /> : Google Generative AI services.
+- <img src="https://img.shields.io/badge/next.js-black" alt="Next.js" /> , <img src="https://img.shields.io/badge/react-blue" alt="React" /> , <img src="https://img.shields.io/badge/react--dom-blue" alt="ReactDOM" /> : Core Next.js and React libraries.
+- <img src="https://img.shields.io/badge/tailwindcss-teal" alt="TailwindCSS" /> , <img src="https://img.shields.io/badge/daisyui-purple" alt="DaisyUI" /> : UI styling with TailwindCSS.
+- <img src="https://img.shields.io/badge/typescript-blue" alt="TypeScript" /> : TypeScript support.
+- <img src="https://img.shields.io/badge/recharts-green" alt="Recharts" /> , <img src="https://img.shields.io/badge/remark-grey" alt="Remark" /> , <img src="https://img.shields.io/badge/sweetalert2-pink" alt="SweetAlert2" /> : Data visualization, markdown rendering, and alerts.
 
 ## Contributing  
 
@@ -141,12 +137,10 @@ We **welcome contributions** to the project! If you'd like to help, please follo
 
 ### Contribution Guidelines  
 
-| Guideline | Details |
-|-------------|----------|
-| **Code Style** | Follow best practices and clean code principles. |
-| **Commit Messages** | Use clear, concise messages (e.g., `feat: add login page`). |
-| **PR Description** | Provide a summary of changes and link related issues. |
-| **Testing** | Ensure your code runs smoothly before submitting. |
+- **Code Style**: Follow best practices and clean code principles.
+- **Commit Messages**: Use clear, concise messages (e.g., `feat: add login page`).
+- **PR Description**: Provide a summary of changes and link related issues.
+- **Testing**: Ensure your code runs smoothly before submitting.
 
 ### Thank You for Your Contribution!  
 
