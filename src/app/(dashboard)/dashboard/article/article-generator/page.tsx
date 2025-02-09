@@ -81,8 +81,6 @@ export default function ArticleGenerator() {
       .replace(/\*\*(.*?)\*\*/g, '$1')
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/&amp;/g, '&amp;')
-      .replace(/<p>\s*\.\s*/g, '<p>')
-      .replace(/\s*\.\s*<\/p>/g, '</p>')
       .replace(/<\/p>\s*\.\s*<p>/g, '</p>\n<p>')
       .trim();
   };
@@ -266,7 +264,7 @@ PENTING:
       <div className='w-full bg-base-100 shadow-xl p-6 rounded-lg space-y-6'>
         <div
           tabIndex={0}
-          className='collapse collapse-arrow border-base-300 bg-base-100 border border-base-300 border'
+          className='collapse collapse-arrow bg-base-100 border border-base-300'
         >
           <div className='collapse-title font-semibold flex items-center gap-2'>
             <FaNewspaper /> Detail Artikel Berita
